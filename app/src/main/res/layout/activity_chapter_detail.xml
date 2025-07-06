@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:contentDescription="Quay lại"/>
+
+
+    <TextView
+        android:id="@+id/tvChapterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tiêu đề chương"
+        android:fontFamily="@font/font_lexend"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="16dp" />
+<!--    <ImageView-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:src="@drawable/lgdsach"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginEnd="16dp"/>-->
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvChapterTitle"
+        android:layout_above="@id/navigationLayout"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvChapterContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_lexend"
+            android:text="Nội dung chương"
+            android:textSize="18sp"
+            android:lineSpacingExtra="8dp"
+            android:textColor="@android:color/black"/>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_alignParentBottom="true"
+        android:progress="0"
+        android:max="100"/>
+
+    <LinearLayout
+        android:id="@+id/navigationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/progressBar"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <ImageButton
+            android:id="@+id/btnPrevChapter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Trang trước"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/white"
+            android:layout_weight="1"
+            android:src="@drawable/before" />
+
+        <ImageButton
+            android:id="@+id/btnNextChapter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Trang sau"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/white"
+            android:layout_weight="1"
+            android:src="@drawable/ic_next" />
+    </LinearLayout>
+
+</RelativeLayout>

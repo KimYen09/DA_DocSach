@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">DoAn</string>
+    <string name="v1study_s_courses">V1Study\'s courses</string>
+    <string name="click_show_more"><![CDATA[(Click =>Show more)]]></string>
+    <string name="underlined_text"><u>Không phải bây giờ</u></string>
+    <string name="underlined_text2"><u>Gửi lại mã</u></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back">Quay lại</string>
+    <string name="gioithieuvebanthan">Giới thiệu về bản thân bạn</string>
+    <string name="mail">Email</string>
+    <string name="tendn">Tên đăng nhập</string>
+    <string name="birthday">Ngày sinh của bạn là?</string>
+    <string name="tt">Tiếp tục</string>
+    <string name="default_web_client_id">1064930701965-rcfgahm3svf8kqdb8e1clhcilugv4h0m.apps.googleusercontent.com</string>
+
+
+    <string name="hint_username">Tên đăng nhập</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_dd">DD</string>
+    <string name="hint_mm">MM</string>
+    <string name="hint_year">YYYY</string>
+
+</resources>

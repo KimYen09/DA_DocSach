@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="novel">#CE5A53</color>
+    <color name="selected_button_color">#58CE5A53</color>
+    <color name="novel2">#B8322A</color>
+
+</resources>

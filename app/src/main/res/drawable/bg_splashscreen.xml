@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+      android:drawable="@color/white"
+      />
+<!--    <item-->
+<!--        android:layout_width="157dp"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:src="@drawable/lgsach"/>-->
+    <item android:drawable="@color/novel"/>
+
+    <item android:drawable="@drawable/lgsach"
+          android:gravity="center">
+    </item>
+
+</layer-list>

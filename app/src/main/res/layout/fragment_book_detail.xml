@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Hình ảnh cuốn sách -->
+    <ImageView
+        android:id="@+id/bookImage"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/lgsach2"
+        android:scaleType="centerCrop"/>
+<!--        android:contentDescription="@string/book_image_desc"/>-->
+
+    <!-- Tiêu đề cuốn sách -->
+    <TextView
+        android:id="@+id/bookTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Book Title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingTop="16dp"
+        android:textColor="#000000"/>
+
+    <!-- Tác giả -->
+    <TextView
+        android:id="@+id/bookAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Author Name"
+        android:textSize="16sp"
+        android:textColor="#555555"
+        android:paddingTop="8dp"/>
+
+    <!-- Mô tả cuốn sách -->
+    <TextView
+        android:id="@+id/bookDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description of the book goes here."
+        android:textSize="14sp"
+        android:textColor="#777777"
+        android:paddingTop="16dp"/>
+
+</LinearLayout>

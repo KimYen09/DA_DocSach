@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context=".account.OTPPass">
+
+    <ImageView
+        android:id="@+id/backforget"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/baseline_arrow_back_24" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/lgsach2"
+            />
+
+        <TextView
+            android:id="@+id/otpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/font_lexend"
+            android:layout_gravity="center"
+            android:text="Nhập mã OTP"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!--        <com.chaos.view.PinView-->
+        <!--            android:id="@+id/pinView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:pinViewItemCount="6"-->
+        <!--            android:hint="Nhập mã OTP"-->
+        <!--            android:importantForAccessibility="yes"-->
+        <!--            app:hideLineWhenFilled="false"-->
+        <!--            app:lineColor="#FF5722"-->
+        <!--            app:lineWidth="2dp"-->
+        <!--            app:fieldTextSize="18sp"-->
+        <!--            app:fieldTextColor="#000000"-->
+        <!--            />-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp">
+
+            <EditText
+                android:id="@+id/otp1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box" />
+
+            <EditText
+                android:id="@+id/otp2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box" />
+
+            <EditText
+                android:id="@+id/otp3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box" />
+
+            <EditText
+                android:id="@+id/otp4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box" />
+
+            <EditText
+                android:id="@+id/otp5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/otp_box"
+                android:gravity="center"
+                android:inputType="number"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/otp6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:background="@drawable/otp_box" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bạn chưa nhận đượt mã?"
+                android:textSize="16sp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:textSize="16sp"
+                android:text="@string/underlined_text2"
+                android:textColor="@color/black"
+                android:textStyle=""
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnXacThuc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xác thực Email"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/novel"
+        android:fontFamily="@font/font_lexend"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="20dp" />
+
+</LinearLayout>

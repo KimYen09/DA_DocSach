@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Test">
+
+    <RelativeLayout
+        android:id="@+id/rlbelow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivlogo"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:src="@drawable/lgdsach"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/white" />
+
+    </RelativeLayout>
+
+    
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/mView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/mn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemTextColor="@color/color_nav"
+        app:itemIconTint="@color/color_nav"
+        app:labelVisibilityMode="selected"
+        app:menu="@menu/nav_menu"/>
+
+</RelativeLayout>
