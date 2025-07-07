@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1064930701965",
+    "firebase_url": "https://docsachdb-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "docsachdb",
+    "storage_bucket": "docsachdb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064930701965:android:45d195b22824926512e8c4",
+        "android_client_info": {
+          "package_name": "com.example.doan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1064930701965-rcfgahm3svf8kqdb8e1clhcilugv4h0m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.doan",
+            "certificate_hash": "d4cfcc32021f3f85cdf6523397ea991465b34556"
+          }
+        },
+        {
+          "client_id": "1064930701965-vgfgq5r6a4kf32o7rlntqr4uasbld0j5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoipPy__w4NByPxpY-cjL08VkdgYZxIuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1064930701965-vgfgq5r6a4kf32o7rlntqr4uasbld0j5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

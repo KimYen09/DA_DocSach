@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:contentDescription="Quay lại"/>
+
+        <TextView
+            android:id="@+id/tvChapterListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danh Sách Chương"
+            android:fontFamily="@font/font_lexend"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:paddingLeft="32dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="10dp" />
+    </LinearLayout>
+
+
+
+
+
+    <!-- ProgressBar khi tải dữ liệu -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
+
+    <!-- ListView hiển thị danh sách chương -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChapters"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:scrollbars="vertical" />
+
+
+</LinearLayout>

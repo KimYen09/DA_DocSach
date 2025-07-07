@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".fragmenthome.SearchFragment">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Tìm kiếm truyện..."
+        android:fontFamily="@font/font_lexend"
+        android:background="@drawable/bg_pre"
+        app:iconifiedByDefault="false" />
+
+    <ProgressBar
+        android:id="@+id/progressBarSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="?android:attr/progressBarStyleLarge"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvRomance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/categogry_selector"
+                android:padding="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/font_lexend"
+                android:text="Lãng mạn"/>
+
+            <TextView
+                android:id="@+id/tvSciFi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/categogry_selector"
+                android:padding="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/font_lexend"
+                android:text="Viễn tưởng"/>
+
+            <TextView
+                android:id="@+id/tvHorror"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/categogry_selector"
+                android:padding="8dp"
+                android:fontFamily="@font/font_lexend"
+                android:layout_marginEnd="8dp"
+                android:text="Kinh dị"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/font_lexend"
+        android:paddingTop="8dp" />
+
+</LinearLayout>

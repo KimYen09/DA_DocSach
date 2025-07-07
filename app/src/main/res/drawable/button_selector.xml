@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Khi button được chọn -->
+    <item android:drawable="@color/novel" android:state_selected="true"/>
+    <!-- Mặc định -->
+    <item android:drawable="@android:color/white"/>
+</selector>

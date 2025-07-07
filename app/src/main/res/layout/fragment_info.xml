@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".fragmenthome.InfoFragment">
+
+    <!-- Avatar -->
+    <ImageView
+        android:layout_marginTop="50dp"
+        android:id="@+id/imgAvatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/avatar"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="User Avatar"/>
+
+    <!-- Tên Người Dùng -->
+    <TextView
+        android:id="@+id/txtUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tên người dùng"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/font_lexend"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"/>
+
+    <!-- Email -->
+    <TextView
+        android:id="@+id/txtEmail"
+        android:fontFamily="@font/font_lexend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email người dùng"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Ngày tham gia -->
+    <TextView
+        android:id="@+id/txtJoinDate"
+        android:fontFamily="@font/font_lexend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tham gia: 01/01/2024"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Thống kê -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txtStoryCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_lexend"
+                android:text="0"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_lexend"
+                android:text="Truyện"
+                android:textSize="14sp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txtLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lượt thích"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="14sp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Nút chức năng -->
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chỉnh sửa hồ sơ"
+        android:fontFamily="@font/font_lexend"
+        android:backgroundTint="@color/novel"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đổi mật khẩu"
+        android:fontFamily="@font/font_lexend"
+        android:backgroundTint="@color/novel"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnPurchaseRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/font_lexend"
+        android:backgroundTint="@color/novel"
+        android:textColor="@color/white"
+        android:text="Xem lịch sử mua hàng"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:minHeight="48dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chế độ tối"
+            android:fontFamily="@font/font_lexend"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginEnd="10dp"/>
+
+        <Switch
+            android:id="@+id/switchDarkMode"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:text="Chế độ tối"
+            android:padding="8dp"
+            android:thumbTint="@color/white"
+            android:trackTint="@color/black"/>
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng xuất"
+        android:backgroundTint="@color/novel2"
+        android:textColor="@color/white"/>
+</LinearLayout>
