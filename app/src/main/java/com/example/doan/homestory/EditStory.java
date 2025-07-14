@@ -1,3 +1,161 @@
+<<<<<<< HEAD
+=======
+//package com.example.doan.homestory;
+//
+//import android.app.Activity;
+//import android.content.Intent;
+//import android.net.Uri;
+//import android.os.Bundle;
+//import android.view.View;
+//import android.widget.Button;
+//import android.widget.EditText;
+//import android.widget.ImageView;
+//import android.widget.Spinner;
+//import android.widget.Toast;
+//import androidx.activity.result.ActivityResultLauncher;
+//import androidx.activity.result.contract.ActivityResultContracts;
+//
+//import androidx.annotation.Nullable;
+//import androidx.appcompat.app.AppCompatActivity;
+//
+//import com.bumptech.glide.Glide;
+//import com.example.doan.R;
+//import com.example.doan.model.Chapter;
+//import com.example.doan.model.Story;
+//import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.database.DataSnapshot;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+//
+//import java.util.HashMap;
+//import java.util.Map;
+//
+//public class EditStory extends AppCompatActivity {
+//    private EditText edtTitle, edtDescription;
+//    private EditText edtCategory;
+//    private ImageView imgCover;
+//    private Button btnSave, btnChooseImage;
+//    private DatabaseReference databaseReference;
+//    private String storyId;
+//    private String imageUrl; // Lưu URL ảnh mới
+//    private ActivityResultLauncher<Intent> galleryLauncher;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_edit_story);
+//
+//        edtTitle = findViewById(R.id.edtTitle);
+//        edtDescription = findViewById(R.id.edtDescription);
+//        edtCategory = findViewById(R.id.edtCategory);
+//        imgCover = findViewById(R.id.imgCover);
+//        btnSave = findViewById(R.id.btnSave);
+//        btnChooseImage = findViewById(R.id.btnChooseImage);
+//
+//        databaseReference = FirebaseDatabase.getInstance().getReference("stories");
+//
+//        // Đăng ký ActivityResultLauncher để chọn ảnh
+//        galleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//                result -> {
+//                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+//                        Uri imageUri = result.getData().getData();
+//                        imgCover.setImageURI(imageUri);
+//                        imageUrl = imageUri.toString(); // Lưu đường dẫn ảnh mới
+//                    }
+//                });
+//
+//        btnChooseImage.setOnClickListener(v -> openGallery());
+//
+//        // Nhận ID truyện
+//        storyId = getIntent().getStringExtra("storyId");
+//        if (storyId != null) {
+//            loadStoryData(storyId);
+//        }
+//
+//        btnSave.setOnClickListener(v -> saveChanges());
+//    }
+//
+//    // Mở thư viện ảnh
+//    private void openGallery() {
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setType("drawable/*");
+//        galleryLauncher.launch(intent);
+//    }
+//
+//
+//    // Mở thư viện ảnh
+//    private void loadStoryData(String storyId) {
+//        databaseReference.child(storyId).get().addOnSuccessListener(snapshot -> {
+//            Story story = snapshot.getValue(Story.class);
+//            if (story != null) {
+//                edtTitle.setText(story.getTitle());
+//                edtDescription.setText(story.getDescription());
+//                edtCategory.setText(story.getCategory());
+//                imageUrl = story.getImageResource();
+//
+//                // Hiển thị ảnh bìa
+//                Glide.with(this).load(imageUrl).into(imgCover);
+//            }
+//        }).addOnFailureListener(e ->
+//                Toast.makeText(EditStory.this, "Lỗi tải dữ liệu!", Toast.LENGTH_SHORT).show()
+//        );
+//    }
+//
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 100 && resultCode == Activity.RESULT_OK && data != null) {
+//            Uri imageUri = data.getData();
+//            imgCover.setImageURI(imageUri);
+//            imageUrl = imageUri.toString(); // Lưu đường dẫn ảnh mới
+//        }
+//    }
+//
+//
+//    private void saveChanges() {
+//        String newTitle = edtTitle.getText().toString().trim();
+//        String newDescription = edtDescription.getText().toString().trim();
+//        String newCategory = edtCategory.getText().toString().trim();
+//
+//        if (newTitle.isEmpty() || newDescription.isEmpty()) {
+//            Toast.makeText(this, "Vui lòng nhập đủ thông tin!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        // Lấy authorId từ FirebaseAuth (tài khoản đang đăng nhập)
+//        String authorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//
+//        // Lấy danh sách chapters từ Firebase trước khi cập nhật
+//        databaseReference.child(storyId).child("chapters").get().addOnSuccessListener(snapshot -> {
+//            Map<String, Chapter> chapters = new HashMap<>();
+//            for (DataSnapshot chapterSnapshot : snapshot.getChildren()) {
+//                Chapter chapter = chapterSnapshot.getValue(Chapter.class);
+//                if (chapter != null) {
+//                    chapters.put(chapterSnapshot.getKey(), chapter);
+//                }
+//            }
+//
+//            // Cập nhật truyện
+//            Story updatedStory = new Story(storyId, newTitle, newDescription, newCategory, imageUrl, authorId, chapters);
+//            databaseReference.child(storyId).setValue(updatedStory)
+//                    .addOnSuccessListener(aVoid -> {
+//                        Toast.makeText(EditStory.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+//                        finish();
+//                    })
+//                    .addOnFailureListener(e ->
+//                            Toast.makeText(EditStory.this, "Lỗi khi cập nhật!", Toast.LENGTH_SHORT).show()
+//                    );
+//
+//        }).addOnFailureListener(e ->
+//                Toast.makeText(EditStory.this, "Lỗi tải chương truyện!", Toast.LENGTH_SHORT).show()
+//        );
+//    }
+//
+//
+//}
+
+>>>>>>> 544230bfed368006ff7c551f97449dac2f325339
 package com.example.doan.homestory;
 
 import android.app.Activity;
@@ -72,9 +230,12 @@ public class EditStory extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
         btnSave.setOnClickListener(v -> saveChanges());
 
+<<<<<<< HEAD
         // Thêm sự kiện click cho ImageView để mở thư viện
         imgCover.setOnClickListener(v -> openGallery());
 
+=======
+>>>>>>> 544230bfed368006ff7c551f97449dac2f325339
         // Khi nhập URL ảnh -> Hiển thị ngay
         edtImageUrl.addTextChangedListener(new TextWatcher() {
             @Override
@@ -86,6 +247,7 @@ public class EditStory extends AppCompatActivity {
                 Log.d("EditStory", "URL nhập vào: " + url);
 
                 if (!TextUtils.isEmpty(url) && imgCover != null) {
+<<<<<<< HEAD
                     // Kiểm tra xem url có phải là một resource id hay không
                     if (TextUtils.isDigitsOnly(url)) { // Giả sử resource id là số
                         try {
@@ -107,6 +269,13 @@ public class EditStory extends AppCompatActivity {
                              // Có thể hiển thị một ảnh placeholder ở đây nếu muốn
                              // imgCover.setImageResource(R.drawable.placeholder_image);
                         }
+=======
+                    int resId = getResources().getIdentifier(url, "drawable", getPackageName());
+                    if (resId != 0) {
+                        Glide.with(EditStory.this).load(resId).into(imgCover);
+                    } else {
+                        Log.e("EditStory", "Không tìm thấy ảnh trong drawable: " + url);
+>>>>>>> 544230bfed368006ff7c551f97449dac2f325339
                     }
                 } else {
                     Log.e("EditStory", "imgCover hoặc URL ảnh bị null");
@@ -126,12 +295,17 @@ public class EditStory extends AppCompatActivity {
                         Uri imageUri = result.getData().getData();
                         imgCover.setImageURI(imageUri);
                         imageUrl = imageUri.toString();
+<<<<<<< HEAD
                         edtImageUrl.setText(imageUrl); // Cập nhật EditText với Uri của ảnh được chọn
+=======
+                        edtImageUrl.setText(imageUrl); // Cập nhật EditText
+>>>>>>> 544230bfed368006ff7c551f97449dac2f325339
                     }
                 }
         );
     }
 
+<<<<<<< HEAD
     // Mở thư viện ảnh
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -139,6 +313,8 @@ public class EditStory extends AppCompatActivity {
         galleryLauncher.launch(intent);
     }
 
+=======
+>>>>>>> 544230bfed368006ff7c551f97449dac2f325339
     private void loadStoryData(String storyId) {
         databaseReference.child(storyId).get().addOnSuccessListener(snapshot -> {
             Story story = snapshot.getValue(Story.class);
@@ -146,6 +322,7 @@ public class EditStory extends AppCompatActivity {
                 edtTitle.setText(story.getTitle());
                 edtDescription.setText(story.getDescription());
                 edtCategory.setText(story.getCategory());
+<<<<<<< HEAD
                 
                 imageUrl = story.getImageResource(); // Gán imageUrl từ story
                 edtImageUrl.setText(imageUrl); // Cập nhật EditText với imageUrl
@@ -166,6 +343,22 @@ public class EditStory extends AppCompatActivity {
                 } else {
                     Log.e("EditStory", "imageUrl hoặc imgCover bị null khi loadStoryData");
                 }
+=======
+                if (!TextUtils.isEmpty(imageUrl) && imgCover != null) {
+                    int resId = getResources().getIdentifier(imageUrl, "drawable", getPackageName());
+                    if (resId != 0) {
+                        Glide.with(this).load(resId).into(imgCover);
+                    } else {
+                        Glide.with(this).load(imageUrl).into(imgCover); // Nếu là URL online
+                    }
+                } else {
+                    Log.e("EditStory", "imageUrl hoặc imgCover bị null");
+                }
+
+
+                imageUrl = story.getImageResource();
+                Glide.with(this).load(imageUrl).into(imgCover);
+>>>>>>> 544230bfed368006ff7c551f97449dac2f325339
             }
         }).addOnFailureListener(e ->
                 Toast.makeText(EditStory.this, "Lỗi tải dữ liệu!", Toast.LENGTH_SHORT).show()
@@ -176,9 +369,13 @@ public class EditStory extends AppCompatActivity {
         String newTitle = edtTitle.getText().toString().trim();
         String newDescription = edtDescription.getText().toString().trim();
         String newCategory = edtCategory.getText().toString().trim();
+<<<<<<< HEAD
         // Lấy URL ảnh từ edtImageUrl, vì nó có thể đã được cập nhật từ gallery hoặc nhập tay
         String finalImageUrl = edtImageUrl.getText().toString().trim();
 
+=======
+        String newImageUrl = edtImageUrl.getText().toString().trim();
+>>>>>>> 544230bfed368006ff7c551f97449dac2f325339
 
         if (TextUtils.isEmpty(newTitle) || TextUtils.isEmpty(newDescription) || TextUtils.isEmpty(newCategory)) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
@@ -192,8 +389,12 @@ public class EditStory extends AppCompatActivity {
 
         String userId = auth.getCurrentUser().getUid();
         String type = radioSelected.isChecked() ? "Tuyển chọn" : "Premium";
+<<<<<<< HEAD
         // Sử dụng finalImageUrl đã được cập nhật
         Story updatedStory = new Story(storyId, newTitle, newDescription, newCategory, finalImageUrl, type, userId, new HashMap<>());
+=======
+        Story updatedStory = new Story(storyId, newTitle, newDescription, newCategory, newImageUrl, type, userId, new HashMap<>());
+>>>>>>> 544230bfed368006ff7c551f97449dac2f325339
 
         databaseReference.child(storyId).setValue(updatedStory)
                 .addOnSuccessListener(aVoid -> {
