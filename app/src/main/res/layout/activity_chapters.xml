@@ -13,16 +13,17 @@
         android:text="Quay lại" />
 
     <!-- Tiêu đề chương -->
+
+    <!-- Nội dung chương -->
     <TextView
         android:id="@+id/tvChapterTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:layout_marginTop="16dp"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    <!-- Nội dung chương -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"

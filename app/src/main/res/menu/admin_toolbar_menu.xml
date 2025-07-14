@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_all_stories"
+        android:title="Tất cả Truyện"
+        android:icon="@drawable/ic_book_list"
+        app:showAsAction="never" />
+    <item
+    android:id="@+id/action_pending_stories"
+    android:title="Truyện Chờ Duyệt"
+    android:icon="@drawable/ic_pending"
+    app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manage_premium_packages"
+        android:title="Quản lý Gói Premium"
+        android:icon="@drawable/baseline_diamond_24"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_story_statistics"
+        android:title="Thống kê Truyện"
+        android:icon="@drawable/ic_thongke"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="Đăng xuất"
+        android:icon="@drawable/ic_logout"
+        app:showAsAction="never" />
+</menu>

@@ -54,23 +54,16 @@ dependencies {
     implementation ("com.google.firebase:firebase-database:20.0.4")
     implementation ("androidx.appcompat:appcompat:1.4.0'")
     implementation ("androidx.core:core-ktx:1.10.1")
-<<<<<<< HEAD
     implementation ("androidx.recyclerview:recyclerview:1.3.1")
-=======
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
     implementation ("com.google.firebase:firebase-storage:20.2.1")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
-<<<<<<< HEAD
+    implementation("com.google.android.material:material:1.x.x")
 
-
-
-=======
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
 }
 
 apply (plugin= ("com.google.gms.google-services"))

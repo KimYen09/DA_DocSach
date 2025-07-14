@@ -93,7 +93,15 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     public void onBindViewHolder(@NonNull StoryViewHolder holder, int position) {
         Story story = stories.get(position);
 
-        holder.titleTextView.setText(story.getTitle());
+        String originalTitle = story.getTitle();
+        String displayTitle = originalTitle;
+
+        Log.d("StoryAdapterDebug", "Original Title: " + originalTitle); // <-- Thêm dòng này
+
+        if (originalTitle != null && originalTitle.length() > 10) { // Giới hạn 40 ký tự
+            displayTitle = originalTitle.substring(0, 7) + "...";
+        }
+        holder.titleTextView.setText(displayTitle);
         holder.category.setText(story.getCategory());
 
         String imageResource = story.getImageResource();

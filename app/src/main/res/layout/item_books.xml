@@ -18,7 +18,9 @@
         android:text="Book Title"
         android:fontFamily="@font/font_lexend"
         android:textSize="16sp"
-        android:paddingTop="8dp"/>
+        android:paddingTop="8dp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/bookAuthors"
