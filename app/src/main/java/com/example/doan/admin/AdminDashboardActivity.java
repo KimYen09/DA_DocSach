@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.doan.R;
 import com.example.doan.account.Login; // Giả sử bạn có Activity Login
+import com.example.doan.admin.fragment.AllStoriesAdminFragment;
+import com.example.doan.admin.fragment.PendingStoriesAdminFragment;
 
 public class AdminDashboardActivity extends AppCompatActivity {
 
@@ -53,12 +55,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
         } else if (id == R.id.action_pending_stories) {
             fragment = new PendingStoriesAdminFragment();
             title = "Truyện Chờ Duyệt";
-        } else if (id == R.id.action_manage_premium_packages) {
-            fragment = new ManagePremiumPackagesAdminFragment();
-            title = "Quản lý Gói Premium";
-        } else if (id == R.id.action_story_statistics) {
-            fragment = new StoryStatisticsAdminFragment();
-            title = "Thống kê Truyện";
+//        } else if (id == R.id.action_manage_premium_packages) {
+//            fragment = new ManagePremiumPackagesAdminFragment();
+//            title = "Quản lý Gói Premium";
+//        } else if (id == R.id.action_story_statistics) {
+//            fragment = new StoryStatisticsAdminFragment();
+//            title = "Thống kê Truyện";
         } else if (id == R.id.action_logout) {
             // Xử lý đăng xuất admin (ví dụ: FirebaseAuth.getInstance().signOut();)
             Toast.makeText(this, "Đăng xuất Admin", Toast.LENGTH_SHORT).show();

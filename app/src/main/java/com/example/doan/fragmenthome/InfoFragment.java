@@ -12,18 +12,10 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-<<<<<<< HEAD
 import android.widget.Button;
-=======
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-<<<<<<< HEAD
 import com.example.doan.premium.LichSuMuaHangActivity;
-=======
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
 import com.bumptech.glide.Glide;
 import com.example.doan.R;
 import com.example.doan.account.EditProfile;
@@ -41,11 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 public class InfoFragment extends Fragment {
     private ImageView imgAvatar;
     private TextView txtUsername, txtEmail, txtJoinDate, txtStoryCount, txtLikes;
-<<<<<<< HEAD
     private Button btnEditProfile, btnChangePassword, btnLogout, btnPurchaseRecord;
-=======
-    private Button btnEditProfile, btnChangePassword, btnLogout;
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
     private Switch switchDarkMode;
     private DatabaseReference userRef;
     private FirebaseAuth auth;
@@ -68,10 +56,7 @@ public class InfoFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         switchDarkMode = view.findViewById(R.id.switchDarkMode);
 
-<<<<<<< HEAD
         btnPurchaseRecord = view.findViewById(R.id.btnPurchaseRecord);
-=======
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
         // Khởi tạo Firebase Auth và lấy người dùng hiện tại
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
@@ -87,14 +72,11 @@ public class InfoFragment extends Fragment {
         btnChangePassword.setOnClickListener(v -> startActivity(new Intent(getActivity(), ForgetPass.class)));
         btnLogout.setOnClickListener(v -> logout());
 
-<<<<<<< HEAD
         btnPurchaseRecord.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), LichSuMuaHangActivity.class);
             startActivity(intent);
         });
 
-=======
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
         return view;
     }
 

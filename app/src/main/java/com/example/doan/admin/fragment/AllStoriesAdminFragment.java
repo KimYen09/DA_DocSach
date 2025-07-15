@@ -19,7 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doan.R;
-import com.example.doan.admin.adapters.StoryAdminAdapter; // Sẽ tạo sau
+//import com.example.doan.admin.adapters.StoryAdminAdapter; // Sẽ tạo sau
+import com.example.doan.adapter.StoryAdminAdapter;
 import com.example.doan.model.Story;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,7 +46,7 @@ public class AllStoriesAdminFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_admin_all_stories, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_stories_admin, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerViewAllStories);
         searchEditText = view.findViewById(R.id.editTextSearchStory);
@@ -55,8 +56,8 @@ public class AllStoriesAdminFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         allStoryList = new ArrayList<>();
         filteredStoryList = new ArrayList<>();
-        adapter = new StoryAdminAdapter(getContext(), filteredStoryList); // Tạo adapter mới cho admin
-        recyclerView.setAdapter(adapter);
+//        adapter = new StoryAdminAdapter(getContext(), filteredStoryList); // Tạo adapter mới cho admin
+//        recyclerView.setAdapter(adapter);
 
         storiesRef = FirebaseDatabase.getInstance().getReference("stories");
 
@@ -121,6 +122,6 @@ public class AllStoriesAdminFragment extends Fragment {
                 }
             }
         }
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
     }
 }

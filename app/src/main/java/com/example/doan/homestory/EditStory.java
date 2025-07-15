@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 //package com.example.doan.homestory;
 //
 //import android.app.Activity;
@@ -155,7 +153,6 @@
 //
 //}
 
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
 package com.example.doan.homestory;
 
 import android.app.Activity;
@@ -230,12 +227,6 @@ public class EditStory extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
         btnSave.setOnClickListener(v -> saveChanges());
 
-<<<<<<< HEAD
-        // Thêm sự kiện click cho ImageView để mở thư viện
-        imgCover.setOnClickListener(v -> openGallery());
-
-=======
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
         // Khi nhập URL ảnh -> Hiển thị ngay
         edtImageUrl.addTextChangedListener(new TextWatcher() {
             @Override
@@ -247,35 +238,11 @@ public class EditStory extends AppCompatActivity {
                 Log.d("EditStory", "URL nhập vào: " + url);
 
                 if (!TextUtils.isEmpty(url) && imgCover != null) {
-<<<<<<< HEAD
-                    // Kiểm tra xem url có phải là một resource id hay không
-                    if (TextUtils.isDigitsOnly(url)) { // Giả sử resource id là số
-                        try {
-                            int resId = Integer.parseInt(url);
-                            Glide.with(EditStory.this).load(resId).into(imgCover);
-                        } catch (NumberFormatException e) {
-                             Glide.with(EditStory.this).load(url).into(imgCover); // Nếu không phải số thì coi như URL
-                        }
-                    } else if (url.startsWith("android.resource://") || url.startsWith("content://") || url.startsWith("file://")) {
-                        Glide.with(EditStory.this).load(Uri.parse(url)).into(imgCover);
-                    }
-                    else {
-                        // Cố gắng load như một tên drawable nếu không phải URL đầy đủ
-                        int resId = getResources().getIdentifier(url, "drawable", getPackageName());
-                        if (resId != 0) {
-                            Glide.with(EditStory.this).load(resId).into(imgCover);
-                        } else {
-                             Log.e("EditStory", "Không tìm thấy ảnh trong drawable hoặc URL không hợp lệ: " + url);
-                             // Có thể hiển thị một ảnh placeholder ở đây nếu muốn
-                             // imgCover.setImageResource(R.drawable.placeholder_image);
-                        }
-=======
                     int resId = getResources().getIdentifier(url, "drawable", getPackageName());
                     if (resId != 0) {
                         Glide.with(EditStory.this).load(resId).into(imgCover);
                     } else {
                         Log.e("EditStory", "Không tìm thấy ảnh trong drawable: " + url);
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
                     }
                 } else {
                     Log.e("EditStory", "imgCover hoặc URL ảnh bị null");
@@ -295,26 +262,12 @@ public class EditStory extends AppCompatActivity {
                         Uri imageUri = result.getData().getData();
                         imgCover.setImageURI(imageUri);
                         imageUrl = imageUri.toString();
-<<<<<<< HEAD
-                        edtImageUrl.setText(imageUrl); // Cập nhật EditText với Uri của ảnh được chọn
-=======
                         edtImageUrl.setText(imageUrl); // Cập nhật EditText
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
                     }
                 }
         );
     }
 
-<<<<<<< HEAD
-    // Mở thư viện ảnh
-    private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*"); // Chỉ chọn các loại file ảnh
-        galleryLauncher.launch(intent);
-    }
-
-=======
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
     private void loadStoryData(String storyId) {
         databaseReference.child(storyId).get().addOnSuccessListener(snapshot -> {
             Story story = snapshot.getValue(Story.class);
@@ -322,28 +275,6 @@ public class EditStory extends AppCompatActivity {
                 edtTitle.setText(story.getTitle());
                 edtDescription.setText(story.getDescription());
                 edtCategory.setText(story.getCategory());
-<<<<<<< HEAD
-                
-                imageUrl = story.getImageResource(); // Gán imageUrl từ story
-                edtImageUrl.setText(imageUrl); // Cập nhật EditText với imageUrl
-
-                // Hiển thị ảnh bìa
-                if (!TextUtils.isEmpty(imageUrl) && imgCover != null) {
-                     if (imageUrl.startsWith("android.resource://") || imageUrl.startsWith("content://") || imageUrl.startsWith("file://") || imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
-                        Glide.with(this).load(Uri.parse(imageUrl)).into(imgCover);
-                    } else {
-                        int resId = getResources().getIdentifier(imageUrl, "drawable", getPackageName());
-                        if (resId != 0) {
-                            Glide.with(this).load(resId).into(imgCover);
-                        } else {
-                            Log.e("EditStory", "Không tìm thấy ảnh trong drawable: " + imageUrl);
-                            // imgCover.setImageResource(R.drawable.placeholder_image); // Ảnh mặc định nếu không load được
-                        }
-                    }
-                } else {
-                    Log.e("EditStory", "imageUrl hoặc imgCover bị null khi loadStoryData");
-                }
-=======
                 if (!TextUtils.isEmpty(imageUrl) && imgCover != null) {
                     int resId = getResources().getIdentifier(imageUrl, "drawable", getPackageName());
                     if (resId != 0) {
@@ -358,7 +289,6 @@ public class EditStory extends AppCompatActivity {
 
                 imageUrl = story.getImageResource();
                 Glide.with(this).load(imageUrl).into(imgCover);
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
             }
         }).addOnFailureListener(e ->
                 Toast.makeText(EditStory.this, "Lỗi tải dữ liệu!", Toast.LENGTH_SHORT).show()
@@ -369,13 +299,7 @@ public class EditStory extends AppCompatActivity {
         String newTitle = edtTitle.getText().toString().trim();
         String newDescription = edtDescription.getText().toString().trim();
         String newCategory = edtCategory.getText().toString().trim();
-<<<<<<< HEAD
-        // Lấy URL ảnh từ edtImageUrl, vì nó có thể đã được cập nhật từ gallery hoặc nhập tay
-        String finalImageUrl = edtImageUrl.getText().toString().trim();
-
-=======
         String newImageUrl = edtImageUrl.getText().toString().trim();
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
 
         if (TextUtils.isEmpty(newTitle) || TextUtils.isEmpty(newDescription) || TextUtils.isEmpty(newCategory)) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
@@ -389,12 +313,7 @@ public class EditStory extends AppCompatActivity {
 
         String userId = auth.getCurrentUser().getUid();
         String type = radioSelected.isChecked() ? "Tuyển chọn" : "Premium";
-<<<<<<< HEAD
-        // Sử dụng finalImageUrl đã được cập nhật
-        Story updatedStory = new Story(storyId, newTitle, newDescription, newCategory, finalImageUrl, type, userId, new HashMap<>());
-=======
         Story updatedStory = new Story(storyId, newTitle, newDescription, newCategory, newImageUrl, type, userId, new HashMap<>());
->>>>>>> 544230bfed368006ff7c551f97449dac2f325339
 
         databaseReference.child(storyId).setValue(updatedStory)
                 .addOnSuccessListener(aVoid -> {
