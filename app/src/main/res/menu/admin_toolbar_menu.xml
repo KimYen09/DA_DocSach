@@ -7,11 +7,12 @@
         android:title="Tất cả Truyện"
         android:icon="@drawable/ic_book_list"
         app:showAsAction="never" />
+
     <item
-    android:id="@+id/action_pending_stories"
-    android:title="Truyện Chờ Duyệt"
-    android:icon="@drawable/ic_pending"
-    app:showAsAction="never" />
+        android:id="@+id/action_pending_stories"
+        android:title="Truyện Chờ Duyệt"
+        android:icon="@drawable/ic_pending"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_manage_premium_packages"

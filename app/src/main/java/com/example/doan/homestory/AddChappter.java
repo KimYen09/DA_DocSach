@@ -1,6 +1,5 @@
 package com.example.doan.homestory;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -12,11 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan.R;
-import com.example.doan.fragmenthome.WriteFragment;
 import com.example.doan.model.Chapter;
-import com.example.doan.model.Chapters;
-import com.example.doan.ui.ChapterDetailActivity;
-import com.example.doan.ui.ChapterListActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

@@ -3,6 +3,8 @@ package com.example.doan;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -13,6 +15,8 @@ public class Test extends AppCompatActivity {
 
     private ViewPager2 mView;
     private BottomNavigationView mbottomNavigationView;
+    private RelativeLayout rlRegularHeader; // Thêm biến này
+    private Toolbar adminToolbarOnHomepage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

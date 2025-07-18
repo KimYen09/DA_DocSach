@@ -9,18 +9,18 @@
     android:padding="16dp"
     tools:context=".fragmenthome.InfoFragment">
 
-    <!-- Avatar -->
-    <ImageView
-        android:layout_marginTop="50dp"
-        android:id="@+id/imgAvatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/avatar"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="10dp"
-        android:contentDescription="User Avatar"/>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avt"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/avatar"
+        app:civ_border_width="2dp"
+        android:layout_gravity="center_horizontal"
+
+        app:civ_border_color="#FF000000"
+        android:contentDescription="Ảnh đại diện"
+        android:layout_marginBottom="16dp"/>
     <!-- Tên Người Dùng -->
     <TextView
         android:id="@+id/txtUsername"

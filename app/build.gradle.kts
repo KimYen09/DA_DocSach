@@ -63,7 +63,9 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.google.android.material:material:1.x.x")
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
 }
 

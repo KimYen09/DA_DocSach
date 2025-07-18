@@ -29,6 +29,8 @@ public class ForgetPass extends AppCompatActivity {
         edForgetEmail = findViewById(R.id.edforgetE);
         btnNhanMa = findViewById(R.id.btnnhanma);
 
+        findViewById(R.id.backforget).setOnClickListener(v -> finish());
+
         btnNhanMa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

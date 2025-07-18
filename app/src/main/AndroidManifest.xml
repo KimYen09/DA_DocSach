@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
@@ -17,9 +19,6 @@
         android:theme="@style/Theme.DoAn"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
         <activity
             android:name=".admin.AdminDashboardActivity"
             android:exported="false" />
@@ -38,21 +37,10 @@
         <activity
             android:name=".ui.ChapterDetailActivity"
             android:exported="true" />
-        <activity
-            android:name=".model.Chapters"
-            android:exported="true" />
+
         <activity
             android:name=".ui.ChapterListActivity"
             android:exported="true" />
-        <activity
-            android:name=".truyen.DocTruyen"
-            android:exported="false" />
-        <activity
-            android:name=".truyen.ChiTietTruyen"
-            android:exported="false" />
-        <activity
-            android:name=".account.OTPPassword"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.auth.api.signin.v2.GoogleSignIn"
