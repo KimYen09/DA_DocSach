@@ -1,0 +1,34 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "stories": {
+      ".read": "auth != null || true",
+      ".write": "auth != null || true",
+      "$storyId": {
+        ".write": "root.child('users').child(auth.uid).child('role').val() == 'author'"
+      }
+    },
+    "premium": {
+      ".read": "auth != null",
+      ".write": "auth.uid != null && root.child('admins').hasChild(auth.uid)"
+    },
+    "giaoDich": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$userID": {
+        ".read": "auth.uid === $userID || (auth.uid != null && root.child('admins').hasChild(auth.uid))",
+        ".write": "auth.uid === $userID || (auth.uid != null && root.child('admins').hasChild(auth.uid))"
+      }
+    },
+    "test": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}
+

@@ -117,7 +117,26 @@
         android:textStyle="bold"
         app:cornerRadius="30dp"
         app:strokeColor="#070707"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         app:strokeWidth="2dp" />
+
+    <!-- Nút Lịch sử mua hàng -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLichSuMuaHang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/novel"
+        android:fontFamily="@font/font_lexend"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="📋 Lịch sử mua hàng"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp" />
 
 </LinearLayout>

@@ -33,9 +33,11 @@ public class PurchaseHistoryAdapter extends RecyclerView.Adapter<PurchaseHistory
     @Override
     public void onBindViewHolder(@NonNull PurchaseViewHolder holder, int position) {
         PurchaseRecord record = purchaseList.get(position);
-        holder.tvPackageName.setText("Gói: " + record.getPackageName());
-        holder.tvPackagePrice.setText("Giá: " + record.getPackagePrice());
+
+        holder.tvPackageName.setText(record.getPackageName());
+        holder.tvPackagePrice.setText(record.getPackagePrice());
         holder.tvPurchaseDate.setText("Ngày mua: " + record.getPurchaseDate());
+        holder.tvPurchaseId.setText("ID: " + record.getPurchaseId());
     }
 
     @Override
@@ -44,13 +46,14 @@ public class PurchaseHistoryAdapter extends RecyclerView.Adapter<PurchaseHistory
     }
 
     static class PurchaseViewHolder extends RecyclerView.ViewHolder {
-        TextView tvPackageName, tvPackagePrice, tvPurchaseDate;
+        TextView tvPackageName, tvPackagePrice, tvPurchaseDate, tvPurchaseId;
 
         public PurchaseViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPackageName = itemView.findViewById(R.id.tvItemPackageName);
             tvPackagePrice = itemView.findViewById(R.id.tvItemPackagePrice);
             tvPurchaseDate = itemView.findViewById(R.id.tvItemPurchaseDate);
+            tvPurchaseId = itemView.findViewById(R.id.tvItemPurchaseId);
         }
     }
 }

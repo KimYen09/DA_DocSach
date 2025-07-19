@@ -22,6 +22,7 @@ import com.example.doan.fragmenthome.HomeFragment;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 public class Payment extends AppCompatActivity {
     private TextView tvTenGoi, tvPhigoi, tvThongtingoi;
     private Button btnXacNhan, btnHuy;
@@ -31,6 +32,7 @@ public class Payment extends AppCompatActivity {
 
     private DatabaseReference LichSuMuaHang;
     private FirebaseAuth mAuth;
+    private PurchaseManager purchaseManager; // Thêm PurchaseManager
 
     public static final String PREMIUM_PREFS_NAME = "PremiumPrefs";
     public static final String KEY_IS_USER_PREMIUM = "isUserPremium";
@@ -47,6 +49,9 @@ public class Payment extends AppCompatActivity {
         btnHuy = findViewById(R.id.btnHuy);
         mAuth = FirebaseAuth.getInstance();
 
+        // Khởi tạo PurchaseManager
+        purchaseManager = new PurchaseManager(this);
+
         // lay du lieu tu Premium.java
         Intent intent = getIntent();
         goiDuocChon = intent.getStringExtra("ten_goi");
@@ -62,34 +67,10 @@ public class Payment extends AppCompatActivity {
         // hien ngay thanh toan hien tai
         tvThongtingoi.setText("Ngày thanh toán: " + getCurrentDate());
 
-
         btnXacNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Sau khi nhan xac nhan thanh toan hien thong bao thanh cong
-                Toast.makeText(Payment.this,
-                        "Thanh toán cho " + goiDuocChon + " thành công!", Toast.LENGTH_LONG).show();
-
-                // Log the purchase date (optional, or handled by payment SDK)
-                String purchaseDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-                Log.d("PaymentConfirmation", "Confirmed purchase of " + phiCuaGoi + " on " + purchaseDate);
-
-                // Sau khi thanh toan tro lai trang Home
-                saveUserAsPremium(true);
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                if (currentUser != null) {
-                    String userId = currentUser.getUid();
-                    savePurchaseToFirebase(userId, goiDuocChon, phiCuaGoi, purchaseDate);
-                } else {
-                    Log.e("Payment", "User not logged in, cannot save purchase history.");
-                    // truong hop user chua dang nhap
-                }
-
-                Intent HomeIntent = new Intent(Payment.this, HomeFragment.class);
-                HomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                HomeIntent.putExtra("NAVIGATE_TO_HOME_AFTER_PAYMENT", true);
-                startActivity(HomeIntent);
-                finishAffinity();
+                processPurchase();
             }
         });
 
@@ -102,10 +83,76 @@ public class Payment extends AppCompatActivity {
             }
         });
     }
+
+    private void processPurchase() {
+        // Hiển thị thông báo đang xử lý
+        Toast.makeText(this, "Đang xử lý thanh toán...", Toast.LENGTH_SHORT).show();
+
+        // Kiểm tra người dùng đã đăng nhập
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Log.e("Payment", "User not logged in");
+            Toast.makeText(this, "Vui lòng đăng nhập để mua gói", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Log.d("Payment", "Processing purchase for user: " + currentUser.getUid());
+        Log.d("Payment", "Package: " + goiDuocChon + " - Price: " + phiCuaGoi);
+
+        // Lưu trạng thái Premium
+        saveUserAsPremium(true);
+
+        // Lưu lịch sử mua hàng vào Firebase
+        purchaseManager.savePurchaseRecord(goiDuocChon, phiCuaGoi,
+            new PurchaseManager.PurchaseCallback() {
+                @Override
+                public void onSuccess(PurchaseRecord purchaseRecord) {
+                    // Thanh toán thành công
+                    Log.d("Payment", "Purchase saved successfully: " + purchaseRecord.getPurchaseId());
+                    Toast.makeText(Payment.this,
+                        "Thanh toán cho " + goiDuocChon + " thành công!\nID: " + purchaseRecord.getPurchaseId(),
+                        Toast.LENGTH_LONG).show();
+
+                    // Chuyển về trang Home sau 2 giây để user đọc được thông báo
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            navigateToHome();
+                        }
+                    }, 2000);
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    // Thanh toán thành công nhưng không lưu được lịch sử
+                    Log.e("Payment", "Failed to save purchase history: " + error);
+                    Toast.makeText(Payment.this,
+                        "Thanh toán thành công nhưng không thể lưu lịch sử.\nLỗi: " + error,
+                        Toast.LENGTH_LONG).show();
+
+                    // Vẫn chuyển về trang Home vì thanh toán đã thành công
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            navigateToHome();
+                        }
+                    }, 3000);
+                }
+            });
+    }
+
+    private void navigateToHome() {
+        Intent HomeIntent = new Intent(Payment.this, HomeFragment.class);
+        HomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        HomeIntent.putExtra("NAVIGATE_TO_HOME_AFTER_PAYMENT", true);
+        startActivity(HomeIntent);
+        finishAffinity();
+    }
+
+    // Giữ lại method cũ để backup (có thể xóa sau khi test)
     private void savePurchaseToFirebase(String userId, String packageName, String packagePrice, String purchaseDate) {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        // Structure: PurchaseHistory -> UserID -> PurchaseID -> PurchaseDetails
-        String purchaseId = database.child("PurchaseHistory").child(userId).push().getKey(); // Generates a unique ID
+        String purchaseId = database.child("PurchaseHistory").child(userId).push().getKey();
 
         if (purchaseId == null) {
             Log.e("Firebase", "Couldn't get unique key for purchase history");
@@ -113,8 +160,7 @@ public class Payment extends AppCompatActivity {
             return;
         }
 
-            PurchaseRecord record = new PurchaseRecord(purchaseId, packageName, packagePrice, purchaseDate, System.currentTimeMillis());
-        // Using System.currentTimeMillis() for sorting if needed
+        PurchaseRecord record = new PurchaseRecord(purchaseId, packageName, packagePrice, purchaseDate, System.currentTimeMillis());
 
         database.child("PurchaseHistory").child(userId).child(purchaseId).setValue(record)
                 .addOnSuccessListener(aVoid -> Log.d("Firebase", "Purchase history saved successfully for user: " + userId))
@@ -123,7 +169,6 @@ public class Payment extends AppCompatActivity {
                     Toast.makeText(Payment.this, "Lỗi lưu lịch sử mua hàng.", Toast.LENGTH_SHORT).show();
                 });
     }
-
 
     private void saveUserAsPremium(boolean isPremium) {
         SharedPreferences sharedPreferences = getSharedPreferences(PREMIUM_PREFS_NAME, MODE_PRIVATE);
@@ -138,4 +183,3 @@ public class Payment extends AppCompatActivity {
         return sdf.format(new Date());
     }
 }
-

@@ -1,0 +1,18 @@
+# Thiết lập ngắt dòng thống nhất là LF cho tất cả file văn bản
+* text=auto eol=lf
+
+# Cho phép git giữ lại CRLF nếu có file .bat (Windows batch)
+*.bat text eol=crlf
+
+# Không chuyển dòng cho các file nhị phân
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.exe binary
+
+# JSON thường được xem là văn bản
+*.json text
