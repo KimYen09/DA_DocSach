@@ -18,6 +18,7 @@ import com.google.android.material.button.MaterialButton;
 
 // Import các Activity quản lý tương ứng nếu bạn đã có
  import com.example.doan.adminactivity.WriteActivity;
+import com.example.doan.adminactivity.PremiumManagementActivity;
 // import com.example.doan.admin.PendingStoriesActivity;
 // import com.example.doan.admin.PremiumManagementActivity;
 // import com.example.doan.admin.StatisticsActivity;
@@ -55,6 +56,12 @@ public class AdminFragment extends Fragment {
                 startActivity(intent);
             });
         }
-
+        // OnClickListener cho nút "Quản lý gói Premium"
+        if (btnPremiumManagement != null) {
+            btnPremiumManagement.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), PremiumManagementActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 }

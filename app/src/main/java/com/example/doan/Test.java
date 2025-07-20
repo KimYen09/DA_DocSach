@@ -15,6 +15,7 @@ public class Test extends AppCompatActivity {
 
     private ViewPager2 mView;
     private BottomNavigationView mbottomNavigationView;
+    private ViewPager2.OnPageChangeCallback pageChangeCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,8 @@ public class Test extends AppCompatActivity {
         ViewAdapter adapter = new ViewAdapter(this);
         mView.setAdapter(adapter);
 
-
-        // Xử lý thay đổi trang
-        mView.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        // Tạo callback để có thể unregister sau này
+        pageChangeCallback = new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
@@ -42,28 +42,58 @@ public class Test extends AppCompatActivity {
                     case 4: mbottomNavigationView.setSelectedItemId(R.id.nav_profile); break;
                 }
             }
-        });
+        };
 
+        // Đăng ký callback
+        mView.registerOnPageChangeCallback(pageChangeCallback);
 
         mbottomNavigationView.setOnItemSelectedListener(item -> {
-                if(item.getItemId() == R.id.nav_home) {
-                    mView.setCurrentItem(0);
-                }
-                else if(item.getItemId() == R.id.nav_search) {
-                    mView.setCurrentItem(1);
-                }
-                if(item.getItemId() == R.id.nav_library) {
-                    mView.setCurrentItem(2);
-                }
-                if(item.getItemId() == R.id.nav_write) {
-                    mView.setCurrentItem(3);
-                }
-                if(item.getItemId() == R.id.nav_profile) {
-                    mView.setCurrentItem(4);
-                }
-                return true;
+            if(item.getItemId() == R.id.nav_home) {
+                mView.setCurrentItem(0);
+            }
+            else if(item.getItemId() == R.id.nav_search) {
+                mView.setCurrentItem(1);
+            }
+            else if(item.getItemId() == R.id.nav_library) {
+                mView.setCurrentItem(2);
+            }
+            else if(item.getItemId() == R.id.nav_write) {
+                mView.setCurrentItem(3);
+            }
+            else if(item.getItemId() == R.id.nav_profile) {
+                mView.setCurrentItem(4);
+            }
+            return true;
         });
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Cleanup để tránh memory leak
+        if (mView != null && pageChangeCallback != null) {
+            mView.unregisterOnPageChangeCallback(pageChangeCallback);
+        }
+        if (mbottomNavigationView != null) {
+            mbottomNavigationView.setOnItemSelectedListener(null);
+        }
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Cleanup khi activity bị pause
+        if (mView != null && pageChangeCallback != null) {
+            mView.unregisterOnPageChangeCallback(pageChangeCallback);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Đăng ký lại callback khi activity resume
+        if (mView != null && pageChangeCallback != null) {
+            mView.registerOnPageChangeCallback(pageChangeCallback);
+        }
     }
 }

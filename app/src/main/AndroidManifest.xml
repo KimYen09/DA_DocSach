@@ -49,6 +49,10 @@
         <activity
             android:name=".ui.ChapterListActivity"
             android:exported="true" />
+        <activity
+            android:name=".adminactivity.PremiumManagementActivity"
+            android:exported="true"
+            />
 
         <meta-data
             android:name="com.google.android.gms.auth.api.signin.v2.GoogleSignIn"

@@ -75,9 +75,32 @@ public class Story {
         return authorId;
     }
 
-
-
     public Map<String, Chapter> getChapters() {
         return chapters != null ? chapters : new HashMap<>();
+    }
+
+    // Thêm các setter methods còn thiếu
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setImageResource(String imageResource) {
+        this.imageResource = imageResource;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public void setChapters(Map<String, Chapter> chapters) {
+        this.chapters = chapters;
     }
 }
