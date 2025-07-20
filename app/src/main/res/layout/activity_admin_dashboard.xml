@@ -13,7 +13,7 @@
         android:background="?attr/colorPrimary"
         app:titleTextColor="@android:color/white"
         app:title="Admin Dashboard"
-        app:menu="@menu/admin_toolbar_menu" /> <FrameLayout
+        app:menu="@menu/admin_menu" /> <FrameLayout
     android:id="@+id/admin_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="0dp"

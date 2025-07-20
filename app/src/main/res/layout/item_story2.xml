@@ -6,9 +6,9 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/imgStory"
-        android:layout_width="100dp"
-        android:layout_height="160dp"
+        android:id="@+id/imgStory2"
+        android:layout_width="80dp"
+        android:layout_height="140dp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -19,7 +19,7 @@
         android:paddingStart="8dp">
 
         <TextView
-            android:id="@+id/txtStoryTitle"
+            android:id="@+id/txtStoryTitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -27,7 +27,7 @@
             android:layout_marginTop="8dp" />
 
         <TextView
-            android:id="@+id/txtStoryCategory"
+            android:id="@+id/txtStoryCategory2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -40,7 +40,7 @@
             android:layout_marginTop="8dp">
 
             <ImageButton
-                android:id="@+id/btnEditStory"
+                android:id="@+id/btnEditStory2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_edit"
@@ -49,7 +49,7 @@
                 android:padding="8dp" />
 
             <ImageButton
-                android:id="@+id/btnDeleteStory"
+                android:id="@+id/btnDeleteStory2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_delete"

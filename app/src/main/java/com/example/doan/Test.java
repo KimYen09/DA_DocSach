@@ -15,8 +15,6 @@ public class Test extends AppCompatActivity {
 
     private ViewPager2 mView;
     private BottomNavigationView mbottomNavigationView;
-    private RelativeLayout rlRegularHeader; // Thêm biến này
-    private Toolbar adminToolbarOnHomepage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +56,7 @@ public class Test extends AppCompatActivity {
                     mView.setCurrentItem(2);
                 }
                 if(item.getItemId() == R.id.nav_write) {
-                mView.setCurrentItem(3);
+                    mView.setCurrentItem(3);
                 }
                 if(item.getItemId() == R.id.nav_profile) {
                     mView.setCurrentItem(4);

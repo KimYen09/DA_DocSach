@@ -25,10 +25,4 @@
         android:title="Thống kê Truyện"
         android:icon="@drawable/ic_thongke"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_logout"
-        android:title="Đăng xuất"
-        android:icon="@drawable/ic_logout"
-        app:showAsAction="never" />
 </menu>

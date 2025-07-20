@@ -20,8 +20,7 @@ import androidx.appcompat.widget.SearchView;
 
 import com.example.doan.R;
 import com.example.doan.adapter.BookAdapter;
-import com.example.doan.adapter.StoryAdapter;
-import com.example.doan.homestory.EditStory;
+import com.example.doan.adapter.StoryAdapter3;
 import com.example.doan.model.Book;
 import com.example.doan.model.Story;
 import com.example.doan.ui.ChapterListActivity;
@@ -37,7 +36,7 @@ import java.util.List;
 public class SearchFragment extends Fragment {
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private StoryAdapter storyAdapter;
+    private StoryAdapter3 storyAdapter3;
     private List<Story> storyList;
     private DatabaseReference databaseReference;
 
@@ -75,24 +74,10 @@ public class SearchFragment extends Fragment {
 
 
         storyList = new ArrayList<>();
-        storyAdapter = new StoryAdapter(getContext(), storyList, new StoryAdapter.OnStoryActionListener() {
-            @Override
-            public void onDeleteStory(String storyId) {
-                databaseReference.child(storyId).removeValue()
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(getContext(), "Đã xóa truyện", Toast.LENGTH_SHORT).show();
-                            fetchStories(); // Cập nhật danh sách
-                        })
-                        .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi xóa truyện", Toast.LENGTH_SHORT).show());
-            }
-
-            @Override
-            public void onEditStory(Story story) {
-                Toast.makeText(getContext(), "Sửa truyện: " + story.getTitle(), Toast.LENGTH_SHORT).show();
-            }
-
+        storyAdapter3 = new StoryAdapter3(getContext(), storyList, new StoryAdapter3.OnStoryActionListener() {
             @Override
             public void onStoryClick(Story story) {
+                // DÒNG NÀY XỬ LÝ KHI CLICK VÀO TRUYỆN!
                 Toast.makeText(getContext(), "Bạn đã chọn: " + story.getTitle(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), ChapterListActivity.class);
                 intent.putExtra("storyId", story.getId());
@@ -103,7 +88,7 @@ public class SearchFragment extends Fragment {
         });
 
 
-        recyclerView.setAdapter(storyAdapter);
+        recyclerView.setAdapter(storyAdapter3);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("stories");
 
@@ -151,7 +136,7 @@ public class SearchFragment extends Fragment {
 
     private void searchStories(String query) {
         if (query.isEmpty()) {
-            storyAdapter.updateList(originalList); // Nếu không nhập gì, hiển thị danh sách gốc
+            storyAdapter3.updateList(originalList); // Nếu không nhập gì, hiển thị danh sách gốc
             return;
         }
 
@@ -162,7 +147,7 @@ public class SearchFragment extends Fragment {
                 searchResults.add(story);
             }
         }
-        storyAdapter.updateList(searchResults);
+        storyAdapter3.updateList(searchResults);
     }
 
 //    private void setupSearchView() {
@@ -204,7 +189,7 @@ public class SearchFragment extends Fragment {
                     }
                 }
 
-                storyAdapter.notifyDataSetChanged();
+                storyAdapter3.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -238,7 +223,7 @@ public class SearchFragment extends Fragment {
             Toast.makeText(getContext(), "Không tìm thấy truyện", Toast.LENGTH_SHORT).show();
         }
 
-        storyAdapter.updateList(filteredList);
+        storyAdapter3.updateList(filteredList);
     }
 
 
@@ -264,7 +249,7 @@ public class SearchFragment extends Fragment {
             Toast.makeText(getContext(), "Không có truyện trong danh mục này", Toast.LENGTH_SHORT).show();
         }
 
-        storyAdapter.updateList(filteredList);
+        storyAdapter3.updateList(filteredList);
     }
 
 
