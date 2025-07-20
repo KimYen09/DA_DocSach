@@ -18,7 +18,7 @@ import com.example.doan.adminactivity.StatisticsActivity;
 import com.google.android.material.button.MaterialButton;
 
 // Import các Activity quản lý tương ứng nếu bạn đã có
- import com.example.doan.adminactivity.WriteActivity;
+import com.example.doan.adminactivity.WriteActivity;
 import com.example.doan.adminactivity.PremiumManagementActivity;
 // import com.example.doan.admin.PendingStoriesActivity;
 // import com.example.doan.admin.PremiumManagementActivity;
@@ -58,21 +58,6 @@ public class AdminFragment extends Fragment {
             });
         }
 
-        // OnClickListener cho nút "Quản lý gói Premium"
-        if (btnPremiumManagement != null) {
-            btnPremiumManagement.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), PremiumManagementActivity.class);
-                startActivity(intent);
-            });
-        }
-
-
-        if (btnStatistics != null) { // Kiểm tra null
-            btnStatistics.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), StatisticsActivity.class);
-                startActivity(intent);
-            });
-        }
         // OnClickListener cho nút "Truyện chờ duyệt"
         if (btnPendingStories != null) {
             btnPendingStories.setOnClickListener(v -> {
@@ -88,6 +73,21 @@ public class AdminFragment extends Fragment {
             });
         } else {
             Log.e("AdminFragment", "btnPendingStories is null!");
+        }
+
+        // OnClickListener cho nút "Quản lý gói Premium"
+        if (btnPremiumManagement != null) {
+            btnPremiumManagement.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), PremiumManagementActivity.class);
+                startActivity(intent);
+            });
+        }
+
+        if (btnStatistics != null) { // Kiểm tra null
+            btnStatistics.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), StatisticsActivity.class);
+                startActivity(intent);
+            });
         }
     }
 }
