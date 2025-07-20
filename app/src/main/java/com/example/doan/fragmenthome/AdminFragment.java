@@ -73,7 +73,21 @@ public class AdminFragment extends Fragment {
                 startActivity(intent);
             });
         }
-
-
+        // OnClickListener cho nút "Truyện chờ duyệt"
+        if (btnPendingStories != null) {
+            btnPendingStories.setOnClickListener(v -> {
+                Log.d("AdminFragment", "Pending Stories button clicked");
+                try {
+                    Intent intent = new Intent(getActivity(), PendingStoriesActivity.class);
+                    startActivity(intent);
+                    Log.d("AdminFragment", "Starting PendingStoriesActivity");
+                } catch (Exception e) {
+                    Log.e("AdminFragment", "Error starting PendingStoriesActivity: " + e.getMessage());
+                    Toast.makeText(getActivity(), "Lỗi khi mở Truyện chờ duyệt: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Log.e("AdminFragment", "btnPendingStories is null!");
+        }
     }
 }
