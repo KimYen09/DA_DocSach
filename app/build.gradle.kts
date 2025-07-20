@@ -13,6 +13,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -65,7 +66,11 @@ dependencies {
 
     // Other UI components
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    implementation("androidx.multidex:multidex:2.0.1")
+
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }
 
 apply(plugin = "com.google.gms.google-services")

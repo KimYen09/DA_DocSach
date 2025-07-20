@@ -62,6 +62,27 @@
 
     </LinearLayout>
 
+    <!-- Thêm TextView hiển thị trạng thái Premium -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#F0F0F0">
+
+        <TextView
+            android:id="@+id/tvPremiumStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_lexend"
+            android:padding="16dp"
+            android:text="Đang kiểm tra trạng thái Premium..."
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center" />
+
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/pre1m"

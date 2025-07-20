@@ -17,6 +17,16 @@
       ".read": "auth != null",
       ".write": "auth.uid != null && root.child('admins').hasChild(auth.uid)"
     },
+    "premium_packages": {
+      ".read": "auth != null || true",
+      ".write": "auth != null || true"
+    },
+    "user_premium_status": {
+      "$userId": {
+        ".read": "auth != null && auth.uid == $userId",
+        ".write": "auth != null && auth.uid == $userId"
+      }
+    },
     "giaoDich": {
       ".read": "auth != null",
       ".write": "auth != null",
@@ -28,7 +38,8 @@
     "test": {
       ".read": "auth != null",
       ".write": "auth != null"
-    }
+    },
+    ".read": false,
+    ".write": false
   }
 }
-

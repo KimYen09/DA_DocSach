@@ -15,6 +15,7 @@ public class Chapter {
         this.storyId = storyId;
     }
 
+    // Getters
     public String getId() {
         return id;
     }
@@ -34,5 +35,21 @@ public class Chapter {
     public String getStoryId() { // Thêm getter cho storyId
         return storyId;
     }
-}
 
+    // Setters - Cần thiết cho Firebase
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setStoryId(String storyId) {
+        this.storyId = storyId;
+    }
+}
