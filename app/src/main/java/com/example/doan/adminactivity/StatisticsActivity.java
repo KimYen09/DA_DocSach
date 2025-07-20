@@ -1,260 +1,230 @@
-package com.example.doan.adminactivity; // Đặt trong package admin hoặc package phù hợp
+package com.example.doan.adminactivity; // Đảm bảo đúng package của bạn
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText; // Thêm import cho EditText
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.activity.EdgeToEdge;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.doan.R;
-import com.example.doan.model.Story;
-import com.example.doan.utils.FirebaseDataUpdater;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-// Imports cho MPAndroidChart
+// Import các lớp cần thiết từ thư viện MPAndroidChart
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate; // Để sử dụng các màu mẫu
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar; // Thêm import cho Calendar
-import java.util.List;
-import java.util.Locale; // Thêm import cho Locale
-import java.text.SimpleDateFormat; // Thêm import cho SimpleDateFormat
+import java.util.Calendar;
+import java.util.Locale;
 
 public class StatisticsActivity extends AppCompatActivity {
 
-    private static final String TAG = "StatisticsActivity";
+    // Khai báo các thành phần UI từ layout XML
+    private ImageView backButton;
+    private EditText etFromDate, etToDate;
+    private MaterialButton btnApplyFilter, btnRefreshStatistics;
+    private TextView tvTotalStories, tvTotalViews;
+    private PieChart pieChart;
+    private BarChart barChart;
+    private ProgressBar progressBar;
 
-    private TextView tvTotalStories;
-    private TextView tvTotalViews;
-    private ProgressBar progressBarStatistics;
-    private MaterialButton btnRefreshStatistics;
-    private BarChart barChartStatistics;
-
-    private EditText etFilterYear; // Thêm EditText cho năm
-    private EditText etFilterMonth; // Thêm EditText cho tháng
-    private MaterialButton btnApplyFilter; // Thêm nút áp dụng bộ lọc
-
-    private DatabaseReference storiesRef;
-    private ImageView backforget;
+    // Đối tượng Calendar để lưu trữ ngày được chọn
+    private Calendar fromCalendar, toCalendar;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_statistics);
+        // Gán layout XML cho Activity này
+        setContentView(R.layout.activity_statistics); // Đảm bảo tên file XML của bạn là activity_statistics.xml
 
-        // Ánh xạ các View
+        // Khởi tạo các View bằng cách tìm ID của chúng
+        initViews();
+
+        // Thiết lập các sự kiện lắng nghe (listeners) cho các View
+        setupListeners();
+
+        // Tải dữ liệu thống kê ban đầu khi Activity được tạo
+        loadStatisticsData();
+    }
+
+    /**
+     * Phương thức để khởi tạo tất cả các thành phần UI từ layout XML.
+     */
+    private void initViews() {
+        backButton = findViewById(R.id.backforget);
+        etFromDate = findViewById(R.id.etFromDate);
+        etToDate = findViewById(R.id.etToDate);
+        btnApplyFilter = findViewById(R.id.btnApplyFilter);
+        btnRefreshStatistics = findViewById(R.id.btnRefreshStatistics);
         tvTotalStories = findViewById(R.id.tvTotalStories);
         tvTotalViews = findViewById(R.id.tvTotalViews);
-        progressBarStatistics = findViewById(R.id.progressBarStatistics);
-        btnRefreshStatistics = findViewById(R.id.btnRefreshStatistics);
-        barChartStatistics = findViewById(R.id.barChartStatistics);
-        backforget = findViewById(R.id.backforget);
+        pieChart = findViewById(R.id.pieChartStatistics);
+        barChart = findViewById(R.id.barChartStoriesPublished);
+        progressBar = findViewById(R.id.progressBarStatistics);
 
-        etFilterYear = findViewById(R.id.etFilterYear); // Ánh xạ EditText năm
-        etFilterMonth = findViewById(R.id.etFilterMonth); // Ánh xạ EditText tháng
-        btnApplyFilter = findViewById(R.id.btnApplyFilter); // Ánh xạ nút áp dụng bộ lọc
+        // Khởi tạo đối tượng Calendar cho ngày bắt đầu và ngày kết thúc
+        fromCalendar = Calendar.getInstance();
+        toCalendar = Calendar.getInstance();
+    }
 
-        // Xử lý WindowInsets (từ template của bạn)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+    /**
+     * Phương thức để thiết lập các sự kiện lắng nghe cho các thành phần UI.
+     */
+    private void setupListeners() {
+        // Xử lý sự kiện nhấp chuột cho nút quay lại
+        backButton.setOnClickListener(v -> finish()); // Kết thúc Activity hiện tại để quay lại màn hình trước
+
+        // Xử lý sự kiện nhấp chuột cho EditText "Từ ngày" để mở DatePickerDialog
+        etFromDate.setOnClickListener(v -> showDatePickerDialog(etFromDate, fromCalendar));
+
+        // Xử lý sự kiện nhấp chuột cho EditText "Đến ngày" để mở DatePickerDialog
+        etToDate.setOnClickListener(v -> showDatePickerDialog(etToDate, toCalendar));
+
+        // Xử lý sự kiện nhấp chuột cho nút "Lọc"
+        btnApplyFilter.setOnClickListener(v -> {
+            // Logic để áp dụng bộ lọc dựa trên ngày đã chọn
+            // Ví dụ: Lấy ngày từ etFromDate và etToDate, sau đó tải lại dữ liệu
+            loadStatisticsData();
         });
 
-
-        // Khởi tạo Firebase Database Reference
-        storiesRef = FirebaseDatabase.getInstance().getReference("stories");
-
-        // Cấu hình biểu đồ ban đầu
-        setupBarChart();
-
-        // Đặt giá trị mặc định cho năm và tháng hiện tại
-        Calendar calendar = Calendar.getInstance();
-        etFilterYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
-        etFilterMonth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1)); // Tháng trong Calendar bắt đầu từ 0
-
-        // Tải dữ liệu thống kê ban đầu (với bộ lọc mặc định)
-        loadStatistics(etFilterYear.getText().toString(), etFilterMonth.getText().toString());
-
-        // Thiết lập OnClickListener cho nút làm mới và áp dụng bộ lọc
-        btnRefreshStatistics.setOnClickListener(v -> loadStatistics(etFilterYear.getText().toString(), etFilterMonth.getText().toString()));
-        btnApplyFilter.setOnClickListener(v -> loadStatistics(etFilterYear.getText().toString(), etFilterMonth.getText().toString()));
-
-        backforget.setOnClickListener(view -> {
-            finish();
+        // Xử lý sự kiện nhấp chuột cho nút "Làm mới"
+        btnRefreshStatistics.setOnClickListener(v -> {
+            // Logic để làm mới toàn bộ dữ liệu thống kê
+            loadStatisticsData();
         });
     }
 
+    /**
+     * Hiển thị DatePickerDialog và cập nhật EditText với ngày đã chọn.
+     *
+     * @param dateEditText EditText sẽ hiển thị ngày đã chọn.
+     * @param calendar     Đối tượng Calendar để lưu trữ và lấy ngày.
+     */
+    private void showDatePickerDialog(EditText dateEditText, Calendar calendar) {
+        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
+            // Cập nhật đối tượng Calendar với ngày, tháng, năm đã chọn
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            // Cập nhật EditText với ngày đã chọn
+            updateDateInView(dateEditText, calendar);
+        };
+
+        // Tạo và hiển thị DatePickerDialog
+        new DatePickerDialog(StatisticsActivity.this, dateSetListener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    /**
+     * Cập nhật văn bản của EditText với ngày từ đối tượng Calendar theo định dạng "dd/MM/yyyy".
+     *
+     * @param dateEditText EditText cần cập nhật.
+     * @param calendar     Đối tượng Calendar chứa ngày.
+     */
+    private void updateDateInView(EditText dateEditText, Calendar calendar) {
+        String myFormat = "dd/MM/yyyy"; // Định dạng ngày mong muốn
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        dateEditText.setText(sdf.format(calendar.getTime()));
+    }
+
+    /**
+     * Phương thức giả lập để tải dữ liệu thống kê.
+     * Trong ứng dụng thực tế, bạn sẽ gọi API hoặc truy vấn cơ sở dữ liệu tại đây.
+     */
+    private void loadStatisticsData() {
+        progressBar.setVisibility(View.VISIBLE); // Hiển thị thanh tiến trình khi đang tải dữ liệu
+
+        // Giả lập quá trình tải dữ liệu bằng cách sử dụng Handler.postDelayed
+        new android.os.Handler().postDelayed(() -> {
+            // Dữ liệu mẫu (thay thế bằng dữ liệu thực tế của bạn)
+            int totalStories = 125;
+            int totalViews = 56789;
+            // Tỷ lệ lượt đọc cho các loại truyện (ví dụ: giả tưởng và phi giả tưởng)
+            float fictionViewsRatio = 0.6f; // 60% truyện giả tưởng
+            float nonFictionViewsRatio = 0.4f; // 40% truyện phi giả tưởng
+
+            // Cập nhật các TextView với dữ liệu mẫu
+            tvTotalStories.setText(String.valueOf(totalStories));
+            tvTotalViews.setText(String.valueOf(totalViews));
+
+            // Thiết lập dữ liệu cho biểu đồ tròn
+            setupPieChart(fictionViewsRatio, nonFictionViewsRatio);
+            // Thiết lập dữ liệu cho biểu đồ cột
+            setupBarChart();
+
+            progressBar.setVisibility(View.GONE); // Ẩn thanh tiến trình sau khi tải xong
+        }, 2000); // Giả lập thời gian tải 2 giây
+    }
+
+    /**
+     * Thiết lập và hiển thị biểu đồ tròn (Pie Chart) với dữ liệu mẫu.
+     *
+     * @param fictionRatio    Tỷ lệ lượt xem của truyện giả tưởng.
+     * @param nonFictionRatio Tỷ lệ lượt xem của truyện phi giả tưởng.
+     */
+    private void setupPieChart(float fictionRatio, float nonFictionRatio) {
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        // Thêm các mục nhập vào biểu đồ tròn
+        entries.add(new PieEntry(fictionRatio, "Truyện giả tưởng"));
+        entries.add(new PieEntry(nonFictionRatio, "Truyện phi giả tưởng"));
+
+        PieDataSet dataSet = new PieDataSet(entries, "Thống kê lượt đọc");
+        // Đặt màu cho các phần của biểu đồ
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS); // Sử dụng các màu mẫu từ MPAndroidChart
+        // Hoặc bạn có thể định nghĩa màu tùy chỉnh:
+        // dataSet.setColors(new int[]{Color.rgb(255, 102, 0), Color.rgb(0, 153, 204)});
+
+        dataSet.setValueTextSize(12f); // Kích thước chữ của giá trị
+        dataSet.setValueTextColor(Color.BLACK); // Màu chữ của giá trị
+
+        PieData data = new PieData(dataSet);
+        pieChart.setData(data);
+        pieChart.setCenterText("Tổng lượt đọc"); // Văn bản ở giữa biểu đồ
+        pieChart.getDescription().setEnabled(false); // Ẩn nhãn mô tả
+        pieChart.animateY(1000); // Hiệu ứng động khi hiển thị biểu đồ
+        pieChart.invalidate(); // Làm mới biểu đồ để hiển thị thay đổi
+    }
+
+    /**
+     * Thiết lập và hiển thị biểu đồ cột (Bar Chart) với dữ liệu mẫu.
+     */
     private void setupBarChart() {
-        barChartStatistics.setDrawBarShadow(false);
-        barChartStatistics.setDrawValueAboveBar(true);
-        barChartStatistics.setMaxVisibleValueCount(50);
-        barChartStatistics.setPinchZoom(false);
-        barChartStatistics.setDrawGridBackground(false);
-
-        XAxis xAxis = barChartStatistics.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setGranularity(1f);
-        xAxis.setTextSize(12f);
-        xAxis.setTextColor(Color.BLACK);
-        xAxis.setLabelCount(2);
-
-//        // Trong setupBarChart()
-        barChartStatistics.setBackgroundColor(Color.WHITE); // Màu nền của biểu đồ
-        barChartStatistics.setExtraOffsets(5f, 10f, 5f, 10f); // Thêm không gian trống (left, top, right, bottom)
-
-//        // Để thêm hiệu ứng đổ bóng cho cột (nếu muốn)
-//         barChartStatistics.setDrawBarShadow(true);
-//         barChartStatistics.setDrawValueAboveBar(false);
-
-        // Để có thể phóng to/thu nhỏ
-         barChartStatistics.setPinchZoom(true);
-         barChartStatistics.setScaleEnabled(true);
-
-        barChartStatistics.getAxisLeft().setDrawGridLines(true);
-        barChartStatistics.getAxisLeft().setAxisMinimum(0f);
-        barChartStatistics.getAxisLeft().setTextSize(12f);
-        barChartStatistics.getAxisLeft().setTextColor(Color.BLACK);
-
-        barChartStatistics.getAxisRight().setEnabled(false);
-        barChartStatistics.getLegend().setEnabled(false);
-
-        Description description = new Description();
-        description.setText("");
-        barChartStatistics.setDescription(description);
-
-        barChartStatistics.animateY(1500);
-    }
-
-    // Thay đổi phương thức loadStatistics để nhận tham số lọc
-    private void loadStatistics(String filterYear, String filterMonth) {
-        progressBarStatistics.setVisibility(View.VISIBLE);
-        barChartStatistics.setVisibility(View.GONE);
-
-        storiesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long totalStoriesFiltered = 0;
-                long totalViewsFiltered = 0;
-
-                if (snapshot.exists()) {
-                    for (DataSnapshot storySnapshot : snapshot.getChildren()) {
-                        Story story = storySnapshot.getValue(Story.class);
-                        if (story != null) {
-                            // Lọc truyện theo năm và tháng tạo
-                            // Giả định Story.java có trường 'creationDate' (String, định dạng yyyy-MM-dd)
-                            String creationDate = story.getCreationDate(); // Cần thêm getCreationDate() vào model Story
-
-                            boolean matchesFilter = true;
-
-                            if (creationDate != null && !creationDate.isEmpty()) {
-                                try {
-                                    // Phân tích ngày tạo để so sánh với bộ lọc
-                                    SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
-                                    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
-
-                                    if (!filterYear.isEmpty()) {
-                                        String storyYear = yearFormat.format(yearMonthFormat.parse(creationDate));
-                                        if (!storyYear.equals(filterYear)) {
-                                            matchesFilter = false;
-                                        }
-                                    }
-
-                                    if (matchesFilter && !filterMonth.isEmpty()) {
-                                        String storyMonth = new SimpleDateFormat("MM", Locale.getDefault()).format(yearMonthFormat.parse(creationDate));
-                                        // Đảm bảo tháng có 2 chữ số (ví dụ: "07" thay vì "7")
-                                        String formattedFilterMonth = String.format(Locale.getDefault(), "%02d", Integer.parseInt(filterMonth));
-                                        if (!storyMonth.equals(formattedFilterMonth)) {
-                                            matchesFilter = false;
-                                        }
-                                    }
-                                } catch (Exception e) {
-                                    Log.e(TAG, "Lỗi phân tích ngày tạo truyện: " + creationDate + ", Lỗi: " + e.getMessage());
-                                    matchesFilter = false; // Nếu có lỗi phân tích, không tính truyện này
-                                }
-                            } else {
-                                matchesFilter = false; // Không có ngày tạo, không tính vào bộ lọc thời gian
-                            }
-
-                            if (matchesFilter) {
-                                totalStoriesFiltered++; // Tăng số truyện nếu khớp bộ lọc
-                                Long viewCount = storySnapshot.child("viewCount").getValue(Long.class);
-                                if (viewCount != null) {
-                                    totalViewsFiltered += viewCount; // Cộng lượt đọc nếu khớp bộ lọc
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Cập nhật giao diện TextViews
-                tvTotalStories.setText(String.valueOf(totalStoriesFiltered));
-                tvTotalViews.setText(String.valueOf(totalViewsFiltered));
-
-                // Cập nhật biểu đồ
-                updateBarChart(totalStoriesFiltered, totalViewsFiltered);
-
-                progressBarStatistics.setVisibility(View.GONE);
-                barChartStatistics.setVisibility(View.VISIBLE);
-                Toast.makeText(StatisticsActivity.this, "Đã tải thống kê mới nhất.", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                progressBarStatistics.setVisibility(View.GONE);
-                barChartStatistics.setVisibility(View.GONE);
-                Toast.makeText(StatisticsActivity.this, "Lỗi tải thống kê: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "Lỗi Firebase khi tải thống kê: " + error.getMessage());
-            }
-        });
-    }
-
-    private void updateBarChart(long totalStories, long totalViews) {
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, totalStories));
-        entries.add(new BarEntry(1f, totalViews));
+        // Dữ liệu mẫu cho số truyện được phát hành theo tháng/quý
+        // X-axis: 0=Tháng 1, 1=Tháng 2, v.v.
+        // Y-axis: Số lượng truyện
+        entries.add(new BarEntry(0, 10)); // Tháng 1: 10 truyện
+        entries.add(new BarEntry(1, 15)); // Tháng 2: 15 truyện
+        entries.add(new BarEntry(2, 8));  // Tháng 3: 8 truyện
+        entries.add(new BarEntry(3, 20)); // Tháng 4: 20 truyện
 
-        BarDataSet dataSet = new BarDataSet(entries, "Thống kê");
-        dataSet.setColors(new int[]{
-                Color.parseColor("#F69084"),
-                Color.parseColor("#807C7C")
-        });
-        dataSet.setValueTextSize(14f);
-        dataSet.setValueTextColor(Color.BLACK);
+        BarDataSet dataSet = new BarDataSet(entries, "Số truyện phát hành");
+        // Đặt màu cho các cột
+        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS); // Sử dụng các màu mẫu từ MPAndroidChart
+        // Hoặc bạn có thể định nghĩa màu tùy chỉnh:
+        // dataSet.setColors(new int[]{Color.rgb(100, 200, 50), Color.rgb(50, 150, 250)});
 
-        BarData barData = new BarData(dataSet);
-        barData.setBarWidth(0.2f);
+        dataSet.setValueTextSize(12f); // Kích thước chữ của giá trị
+        dataSet.setValueTextColor(Color.BLACK); // Màu chữ của giá trị
 
-        barChartStatistics.setData(barData);
-
-        final String[] labels = new String[]{"Tổng truyện", "Tổng lượt đọc"};
-        barChartStatistics.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-
-        barChartStatistics.invalidate();
+        BarData data = new BarData(dataSet);
+        barChart.setData(data);
+        barChart.getDescription().setEnabled(false); // Ẩn nhãn mô tả
+        barChart.animateY(1000); // Hiệu ứng động khi hiển thị biểu đồ
+        barChart.invalidate(); // Làm mới biểu đồ để hiển thị thay đổi
     }
 }

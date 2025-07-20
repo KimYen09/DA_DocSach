@@ -1,195 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp"
-    android:background="@color/white"
-    tools:context=".adminactivity.StatisticsActivity">
+    android:fillViewport="true"
+    android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/backforget"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/baseline_arrow_back_24" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thống kê ứng dụng"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/font_lexend"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="24dp"
-        android:textColor="@color/black"/>
-
-    <!-- Các trường nhập liệu cho bộ lọc thời gian -->
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="16dp">
+        android:orientation="vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        tools:context=".adminactivity.StatisticsActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Năm:"
-        android:textSize="16sp"
-        android:fontFamily="@font/font_lexend"
-        android:textColor="@color/black"
-        android:layout_marginEnd="8dp"/>
+        <ImageView
+            android:id="@+id/backforget"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:contentDescription="Quay lại"
+            android:layout_marginBottom="10dp"/>
 
-    <EditText
-        android:id="@+id/etFilterYear"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="VD: 2024"
-        android:inputType="number"
-        android:maxLength="4"
-        android:fontFamily="@font/font_lexend"
-        android:layout_marginEnd="16dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thống kê"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/font_lexend"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/black"/>
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Tháng:"
-    android:textSize="16sp"
-    android:fontFamily="@font/font_lexend"
-    android:textColor="@color/black"
-    android:layout_marginEnd="8dp"/>
+        <!-- Các trường nhập liệu cho bộ lọc thời gian (Từ ngày - Đến ngày) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
 
-<EditText
-    android:id="@+id/etFilterMonth"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:hint="VD: 07"
-    android:inputType="number"
-    android:maxLength="2"
-    android:fontFamily="@font/font_lexend"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Từ ngày:"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/black"
+                android:layout_marginEnd="8dp"/>
 
-<com.google.android.material.button.MaterialButton
-    android:id="@+id/btnApplyFilter"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Lọc"
-    android:fontFamily="@font/font_lexend"
-    android:backgroundTint="@color/novel"
-    android:textColor="@color/white"
-    android:layout_marginStart="16dp"
-    app:cornerRadius="8dp"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="8dp" />
+            <EditText
+                android:id="@+id/etFromDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="dd/MM/yyyy"
+                android:focusable="false"
+                android:clickable="true"
+                android:fontFamily="@font/font_lexend"
+                android:layout_marginEnd="16dp"/>
 
-</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đến ngày:"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/black"
+                android:layout_marginEnd="8dp"/>
 
-    <!-- Phần hiển thị tổng số truyện và tổng số lượt đọc (giữ lại để hiển thị số liệu cụ thể) -->
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="horizontal"
-android:layout_marginBottom="16dp">
+            <EditText
+                android:id="@+id/etToDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="dd/MM/yyyy"
+                android:focusable="false"
+                android:clickable="true"
+                android:fontFamily="@font/font_lexend"/>
 
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_book_list"
-    android:contentDescription="Biểu tượng truyện"
-    app:tint="@color/novel"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnApplyFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lọc"
+                app:icon="@drawable/ic_search"
+                android:fontFamily="@font/font_lexend"
+                android:backgroundTint="@android:color/white"
+                android:textColor="@color/novel2"
+                android:layout_marginStart="16dp"
+                app:iconTint="@color/novel2"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/novel2"
+                app:strokeWidth="1dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Tổng số truyện:"
-    android:textSize="18sp"
-    android:fontFamily="@font/font_lexend"
-    android:textColor="@color/black"
-    android:layout_marginStart="8dp"/>
+        </LinearLayout>
 
-<TextView
-    android:id="@+id/tvTotalStories"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="0"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    android:fontFamily="@font/font_lexend"
-    android:textColor="@color/novel"
-    android:layout_marginStart="8dp"/>
+        <!-- Phần hiển thị tổng số liệu (giữ lại để hiển thị số liệu cụ thể) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
 
-</LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_book_list"
+                android:contentDescription="Biểu tượng truyện"
+                app:tint="@color/novel"/>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginBottom="24dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng số truyện:"
+                android:textSize="18sp"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/black"
+                android:layout_marginStart="8dp"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_thongke"
-        android:contentDescription="Biểu tượng lượt đọc"
-        app:tint="@color/novel"/>
+            <TextView
+                android:id="@+id/tvTotalStories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/novel"
+                android:layout_marginStart="8dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tổng số lượt đọc:"
-        android:textSize="18sp"
-        android:fontFamily="@font/font_lexend"
-        android:textColor="@color/black"
-        android:layout_marginStart="8dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_thongke"
+                android:contentDescription="Biểu tượng lượt đọc"
+                app:tint="@color/novel"
+                android:layout_marginStart="16dp"/>
 
-    <TextView
-        android:id="@+id/tvTotalViews"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/font_lexend"
-        android:textColor="@color/novel"
-        android:layout_marginStart="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng lượt đọc:"
+                android:textSize="18sp"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/black"
+                android:layout_marginStart="8dp"/>
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvTotalViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/novel"
+                android:layout_marginStart="8dp"/>
 
-    <!-- Biểu đồ BarChart từ MPAndroidChart -->
-<com.github.mikephil.charting.charts.BarChart
-    android:id="@+id/barChartStatistics"
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:layout_marginBottom="24dp"
-    android:layout_marginTop="16dp"/>
+        </LinearLayout>
 
-<ProgressBar
-    android:id="@+id/progressBarStatistics"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:visibility="gone"
-    style="?android:attr/progressBarStyleLarge"/>
+        <!-- Biểu đồ tròn (PieChart) cho Lượt đọc và Doanh thu -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartStatistics"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="16dp"/>
 
-<com.google.android.material.button.MaterialButton
-    android:id="@+id/btnRefreshStatistics"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Làm mới"
-    android:fontFamily="@font/font_lexend"
-    android:backgroundTint="@color/novel"
-    android:textColor="@color/white"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginTop="24dp"
-    android:paddingVertical="12dp"
-    app:cornerRadius="12dp"
-    app:iconGravity="textStart"
-    app:iconTint="@color/white"
-    android:drawablePadding="8dp" />
-</LinearLayout>
+        <!-- Biểu đồ cột (BarChart) cho Số truyện phát hành -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartStoriesPublished"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="16dp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarStatistics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleLarge"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRefreshStatistics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Làm mới"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:drawablePadding="8dp" />
+
+    </LinearLayout>
+</ScrollView>

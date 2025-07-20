@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tạo chương"
+            android:text="Chỉnh sửa chương"
             android:fontFamily="@font/font_lexend"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -63,7 +63,7 @@
         android:textSize="18sp"
         android:padding="12dp"
         android:background="@drawable/bg_edittext_rounded"
-        android:layout_marginBottom="16dp"/>
+    android:layout_marginBottom="16dp"/>
 
     <TextView
         android:layout_width="match_parent"

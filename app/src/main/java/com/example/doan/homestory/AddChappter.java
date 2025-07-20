@@ -29,7 +29,7 @@ public class AddChappter extends AppCompatActivity {
 
         edtChapterTitle = findViewById(R.id.edtChapterTitle);
         edtChapterContent = findViewById(R.id.edtChapterContent);
-        btnAddChapter = findViewById(R.id.btnAddChapter);
+        btnAddChapter = findViewById(R.id.btnSaveChapter);
 
         btnBack = findViewById(R.id.btnBack);
 

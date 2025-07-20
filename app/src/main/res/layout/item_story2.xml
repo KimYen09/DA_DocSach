@@ -56,6 +56,14 @@
                 android:contentDescription="Xoá"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp" />
+            <ImageButton
+                android:id="@+id/btnEditChap"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_book_list"
+                android:contentDescription="quan ly chap"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp" />
 
         </LinearLayout>
 

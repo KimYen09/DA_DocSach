@@ -18,13 +18,14 @@ import com.example.doan.R;
 import com.example.doan.homestory.AddChappter;
 import com.example.doan.model.Story;
 import com.example.doan.ui.ChapterListActivity;
+import com.example.doan.adminactivity.ListChapEdit; // <-- Đảm bảo import đúng Activity này
 
 import java.util.List;
 
 public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewHolder> {
     private Context context;
     private List<Story> stories;
-    private OnItemClickListener listener;
+    private OnItemClickListener listener; // Có vẻ không còn được sử dụng trực tiếp
 
     private boolean isWriteFragment = false;
 
@@ -34,9 +35,8 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
         void onDeleteStory(String storyId);
         void onEditStory(Story story);
         void onStoryClick(Story story);
+        void onEditChapterList(Story story); // <-- Phương thức để chỉnh sửa danh sách chương
     }
-
-
 
     public StoryAdapter2(Context context, List<Story> stories, OnStoryActionListener actionListener) {
         this.context = context;
@@ -44,20 +44,15 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
         this.actionListener = actionListener;
     }
 
-
     @Override
     public int getItemCount() {
         return stories.size();
     }
 
-
-
-
     public void setWriteFragment(boolean isWriteFragment) {
         this.isWriteFragment = isWriteFragment;
         notifyItemRangeChanged(0, stories.size());
     }
-
 
     public interface OnItemClickListener {
         void onItemClick(Story story);
@@ -69,7 +64,7 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
 
     public static class StoryViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView, category;
-        ImageView imageView, btnEdit, btnDelete;
+        ImageView imageView, btnEdit, btnDelete, btnEditChap;
 
         public StoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,9 +73,10 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
             imageView = itemView.findViewById(R.id.imgStory2);
             btnEdit = itemView.findViewById(R.id.btnEditStory2);
             btnDelete = itemView.findViewById(R.id.btnDeleteStory2);
+            btnEditChap = itemView.findViewById(R.id.btnEditChap); // <-- ĐÃ SỬA: Tìm từ itemView
+            // Đảm bảo ID này đúng trong item_story2.xml
         }
     }
-
 
     @NonNull
     @Override
@@ -96,11 +92,8 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
         String originalTitle = story.getTitle();
         String displayTitle = originalTitle;
 
-        Log.d("StoryAdapterDebug", "Original Title: " + originalTitle); // <-- Thêm dòng này
+        Log.d("StoryAdapterDebug", "Original Title: " + originalTitle);
 
-//        if (originalTitle != null && originalTitle.length() > 10) { // Giới hạn 40 ký tự
-//            displayTitle = originalTitle.substring(0, 7) + "...";
-//        }
         holder.titleTextView.setText(displayTitle);
         holder.category.setText(story.getCategory());
 
@@ -120,43 +113,51 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
             holder.imageView.setImageResource(R.drawable.lgsach2);
         }
 
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onItemClick(story);
-            }
-        });
-
-
+        // Logic hiển thị/ẩn các nút Edit/Delete/EditChap
         if (isWriteFragment) {
-            holder.btnEdit.setVisibility(View.VISIBLE);
-            holder.btnDelete.setVisibility(View.VISIBLE);
-
+            if (holder.btnEdit != null) holder.btnEdit.setVisibility(View.VISIBLE);
+            if (holder.btnDelete != null) holder.btnDelete.setVisibility(View.VISIBLE);
+            if (holder.btnEditChap != null) holder.btnEditChap.setVisibility(View.VISIBLE); // <-- HIỂN THỊ btnEditChap
         } else {
-            holder.btnEdit.setVisibility(View.GONE);
-            holder.btnDelete.setVisibility(View.GONE);
+            if (holder.btnEdit != null) holder.btnEdit.setVisibility(View.GONE);
+            if (holder.btnDelete != null) holder.btnDelete.setVisibility(View.GONE);
+            if (holder.btnEditChap != null) holder.btnEditChap.setVisibility(View.GONE); // <-- ẨN btnEditChap
         }
 
+        // OnClickListener cho toàn bộ item
         holder.itemView.setOnClickListener(view -> {
-            if (listener!= null){
-                listener.onItemClick(story);
-            }
-        });
-        holder.btnEdit.setOnClickListener(v -> {
-            if (actionListener != null) {
-                actionListener.onEditStory(story);
+            if (actionListener != null) { // Sử dụng actionListener thay vì listener
+                actionListener.onStoryClick(story);
             }
         });
 
-        holder.btnDelete.setOnClickListener(v -> {
-            if (actionListener != null) {
-                actionListener.onDeleteStory(story.getId());
-            }
-        });
+        // OnClickListener cho nút Edit Story
+        if (holder.btnEdit != null) {
+            holder.btnEdit.setOnClickListener(v -> {
+                if (actionListener != null) {
+                    actionListener.onEditStory(story);
+                }
+            });
+        }
 
+        // OnClickListener cho nút Delete Story
+        if (holder.btnDelete != null) {
+            holder.btnDelete.setOnClickListener(v -> {
+                if (actionListener != null) {
+                    actionListener.onDeleteStory(story.getId());
+                }
+            });
+        }
 
-
+        // OnClickListener cho nút Edit Chapter List
+        if (holder.btnEditChap != null) { // <-- Đảm bảo nút không null trước khi thiết lập listener
+            holder.btnEditChap.setOnClickListener(v -> {
+                if (actionListener != null) {
+                    actionListener.onEditChapterList(story); // Gọi phương thức mới
+                }
+            });
+        }
     }
-
 
     private int getImageResourceId(String imageName) {
         String validImageName = imageName.replaceAll("[^a-zA-Z0-9_]", "");
@@ -171,15 +172,9 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
         }
     }
 
-
     public void updateList(List<Story> newList) {
         this.stories.clear();
         this.stories.addAll(newList);
         notifyDataSetChanged();
     }
-
-
-
-
-
 }
