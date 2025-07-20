@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.doan.R;
 import com.example.doan.adminactivity.PendingStoriesActivity;
+import com.example.doan.adminactivity.StatisticsActivity;
 import com.google.android.material.button.MaterialButton;
 
 // Import các Activity quản lý tương ứng nếu bạn đã có
@@ -52,6 +53,13 @@ public class AdminFragment extends Fragment {
         if (btnAllStories != null) { // Kiểm tra null
             btnAllStories.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), WriteActivity.class);
+                startActivity(intent);
+            });
+        }
+
+        if (btnStatistics != null) { // Kiểm tra null
+            btnStatistics.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), StatisticsActivity.class);
                 startActivity(intent);
             });
         }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingRight="10dp"
     android:paddingLeft="10dp"
-    tools:context=".fragmenthome.WriteFragment">
+    tools:context=".adminactivity.WriteActivity">
 
 
     <ImageView

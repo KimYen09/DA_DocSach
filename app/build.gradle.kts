@@ -65,6 +65,7 @@ dependencies {
 
     // Other UI components
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
 
 apply(plugin = "com.google.gms.google-services")
