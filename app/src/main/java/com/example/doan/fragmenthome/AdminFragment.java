@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.doan.R;
+import com.example.doan.adminactivity.PendingAuthorRequestsActivity;
 import com.example.doan.adminactivity.PendingStoriesActivity;
 import com.example.doan.adminactivity.StatisticsActivity;
 import com.google.android.material.button.MaterialButton;
@@ -28,7 +29,7 @@ public class AdminFragment extends Fragment {
 
     private MaterialButton btnAllStories;
     private MaterialButton btnPendingStories;
-    private MaterialButton btnPremiumManagement;
+    private MaterialButton btnPremiumManagement, btnauthor;
     private MaterialButton btnStatistics;
 
     @Nullable
@@ -42,6 +43,7 @@ public class AdminFragment extends Fragment {
         btnPendingStories = view.findViewById(R.id.btnchoduyet);
         btnPremiumManagement = view.findViewById(R.id.btnPremium);
         btnStatistics = view.findViewById(R.id.btnThongke);
+        btnauthor = view.findViewById(R.id.btnauthor);
 
         // Thiết lập OnClickListener cho từng nút
         setupClickListeners();
@@ -79,6 +81,12 @@ public class AdminFragment extends Fragment {
         if (btnPremiumManagement != null) {
             btnPremiumManagement.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), PremiumManagementActivity.class);
+                startActivity(intent);
+            });
+        }
+        if (btnauthor != null) { // Kiểm tra null
+            btnauthor.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), PendingAuthorRequestsActivity.class);
                 startActivity(intent);
             });
         }

@@ -75,7 +75,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private DatabaseReference storiesRef;
     private DatabaseReference giaoDichRef;
-    private DatabaseReference usersRef;
+    private DatabaseReference usersRef; // Reference to "users" node
 
     // Date format for display/input (dd/MM/yyyy)
     private SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -94,7 +94,7 @@ public class StatisticsActivity extends AppCompatActivity {
         tvTotalStories = findViewById(R.id.tvTotalStories);
         tvTotalViews = findViewById(R.id.tvTotalViews);
         tvTotalRevenue = findViewById(R.id.tvTotalRevenue);
-        tvTotalUsers = findViewById(R.id.tvTotalUsers);
+//        tvTotalUsers = findViewById(R.id.tvTotalUsers);
         progressBarStatistics = findViewById(R.id.progressBarStatistics);
         btnRefreshStatistics = findViewById(R.id.btnRefreshStatistics);
 
@@ -111,6 +111,7 @@ public class StatisticsActivity extends AppCompatActivity {
         storiesRef = FirebaseDatabase.getInstance().getReference("stories");
         giaoDichRef = FirebaseDatabase.getInstance().getReference("giaoDich");
         usersRef = FirebaseDatabase.getInstance().getReference("users");
+
 
         // Cấu hình biểu đồ ban đầu
         setupPieChartOverall();
@@ -151,7 +152,6 @@ public class StatisticsActivity extends AppCompatActivity {
             calendar.setTime(currentDisplayedDate);
         } catch (ParseException e) {
             Log.e(TAG, "Error parsing current date from EditText for DatePicker: " + e.getMessage() + ". Using current system date.");
-            // If parsing fails, use the current system date for the DatePicker
         }
 
         int year = calendar.get(Calendar.YEAR);
@@ -269,13 +269,106 @@ public class StatisticsActivity extends AppCompatActivity {
      * @param fromDateStr Start date string (dd/MM/yyyy).
      * @param toDateStr End date string (dd/MM/yyyy).
      */
+//    private void loadStatistics(String fromDateStr, String toDateStr) {
+//        progressBarStatistics.setVisibility(View.VISIBLE);
+//        pieChartOverall.setVisibility(View.GONE);
+//        barChartRevenueOverPeriod.setVisibility(View.GONE);
+//        lineChartDailyStats.setVisibility(View.GONE);
+//
+//        // Convert date strings from EditText to Date objects for comparison
+//        Date fromDate = null;
+//        Date toDate = null;
+//        try {
+//            fromDate = displayDateFormat.parse(fromDateStr);
+//            toDate = displayDateFormat.parse(toDateStr);
+//            Calendar cal = Calendar.getInstance();
+//            cal.setTime(toDate);
+//            cal.add(Calendar.DAY_OF_MONTH, 1); // Add one day to include the entire end date selected
+//            toDate = cal.getTime();
+//        } catch (ParseException e) {
+//            Toast.makeText(this, "Định dạng ngày không hợp lệ. Vui lòng sử dụng dd/MM/yyyy.", Toast.LENGTH_LONG).show();
+//            Log.e(TAG, "Error parsing input date fields: " + e.getMessage());
+//            progressBarStatistics.setVisibility(View.GONE);
+//            return;
+//        }
+//
+//        final Date finalFromDate = fromDate;
+//        final Date finalToDate = toDate;
+//
+//        // Maps to store daily counts/sums
+//        final Map<String, Long> dailyStoriesCount = new TreeMap<>();
+//        final Map<String, Long> dailyRevenue = new TreeMap<>();
+//        final Map<String, Long> dailyViews = new TreeMap<>(); // For LineChart
+//        final Map<String, Long> dailyUsersJoined = new TreeMap<>(); // For LineChart
+//
+//        // Initialize maps for all days in the range to 0
+//        Calendar currentCal = Calendar.getInstance();
+//        currentCal.setTime(finalFromDate);
+//        while (currentCal.getTime().before(finalToDate)) {
+//            String dateKey = firebaseCreationDateFormat.format(currentCal.getTime());
+//            dailyStoriesCount.put(dateKey, 0L);
+//            dailyRevenue.put(dateKey, 0L);
+//            dailyViews.put(dateKey, 0L);
+//            dailyUsersJoined.put(dateKey, 0L);
+//            currentCal.add(Calendar.DAY_OF_MONTH, 1);
+//        }
+//
+//        // --- Fetch Total Users ---
+//        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                long totalUsersOverall = 0;
+//                if (snapshot.exists()) {
+//                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+//                        // Lấy email
+//                        String email = userSnapshot.child("email").getValue(String.class);
+//                        Log.d(TAG, "UserId: " + userSnapshot.getKey() + " - Email: " + email); // Log để xem email thực tế
+//
+//                        // Chỉ đếm nếu email != null và != rỗng
+//                        if (email != null && !email.trim().isEmpty()) {
+//                            totalUsersOverall++;
+//                        }
+//
+//                        // Nếu có joinDate thì kiểm tra xem có nằm trong khoảng ngày đã chọn không
+//                        String joinDateStr = userSnapshot.child("joinDate").getValue(String.class);
+//                        if (joinDateStr != null && !joinDateStr.isEmpty()) {
+//                            try {
+//                                Date joinDate = displayDateFormat.parse(joinDateStr); // joinDate dạng dd/MM/yyyy
+//                                if (!joinDate.before(finalFromDate) && joinDate.before(finalToDate)) {
+//                                    String dateKey = firebaseCreationDateFormat.format(joinDate); // yyyy-MM-dd
+//                                    dailyUsersJoined.put(dateKey, dailyUsersJoined.getOrDefault(dateKey, 0L) + 1);
+//                                }
+//                            } catch (ParseException e) {
+//                                Log.e(TAG, "Lỗi parse joinDate: " + joinDateStr + " - " + e.getMessage());
+//                            }
+//                        }
+//                    }
+//                }
+//                // Cập nhật UI
+//                tvTotalUsers.setText(String.valueOf(totalUsersOverall));
+//                Log.d(TAG, "Tổng số user có email: " + totalUsersOverall);
+//
+//                // Tiếp tục load stories & transactions
+//                fetchStoriesAndTransactions(finalFromDate, finalToDate,
+//                        dailyStoriesCount, dailyRevenue, dailyViews, dailyUsersJoined, totalUsersOverall);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e(TAG, "Firebase error loading users: " + error.getMessage());
+//                Toast.makeText(StatisticsActivity.this, "Lỗi tải danh sách tài khoản: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                // Vẫn load tiếp các phần còn lại với 0 user
+//                fetchStoriesAndTransactions(finalFromDate, finalToDate,
+//                        dailyStoriesCount, dailyRevenue, dailyViews, new TreeMap<>(), 0);
+//            }
+//        });
+//    }
     private void loadStatistics(String fromDateStr, String toDateStr) {
         progressBarStatistics.setVisibility(View.VISIBLE);
         pieChartOverall.setVisibility(View.GONE);
         barChartRevenueOverPeriod.setVisibility(View.GONE);
         lineChartDailyStats.setVisibility(View.GONE);
 
-        // Convert date strings from EditText to Date objects for comparison
         Date fromDate = null;
         Date toDate = null;
         try {
@@ -283,11 +376,11 @@ public class StatisticsActivity extends AppCompatActivity {
             toDate = displayDateFormat.parse(toDateStr);
             Calendar cal = Calendar.getInstance();
             cal.setTime(toDate);
-            cal.add(Calendar.DAY_OF_MONTH, 1); // Add one day to include the entire end date selected
+            cal.add(Calendar.DAY_OF_MONTH, 1); // Include full end day
             toDate = cal.getTime();
         } catch (ParseException e) {
-            Toast.makeText(this, "Định dạng ngày không hợp lệ. Vui lòng sử dụng dd/MM/yyyy.", Toast.LENGTH_LONG).show();
-            Log.e(TAG, "Error parsing input date fields: " + e.getMessage());
+            Toast.makeText(this, "Định dạng ngày không hợp lệ. Vui lòng dùng dd/MM/yyyy.", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Lỗi parse ngày: " + e.getMessage());
             progressBarStatistics.setVisibility(View.GONE);
             return;
         }
@@ -295,13 +388,13 @@ public class StatisticsActivity extends AppCompatActivity {
         final Date finalFromDate = fromDate;
         final Date finalToDate = toDate;
 
-        // Maps to store daily counts/sums
+        // Chuẩn bị map daily
         final Map<String, Long> dailyStoriesCount = new TreeMap<>();
         final Map<String, Long> dailyRevenue = new TreeMap<>();
-        final Map<String, Long> dailyViews = new TreeMap<>(); // For LineChart
-        final Map<String, Long> dailyUsersJoined = new TreeMap<>(); // For LineChart
+        final Map<String, Long> dailyViews = new TreeMap<>();
+        final Map<String, Long> dailyUsersJoined = new TreeMap<>(); // Có thể xoá luôn nếu ko cần trong line chart
 
-        // Initialize maps for all days in the range to 0
+        // Khởi tạo 0 cho từng ngày
         Calendar currentCal = Calendar.getInstance();
         currentCal.setTime(finalFromDate);
         while (currentCal.getTime().before(finalToDate)) {
@@ -309,48 +402,15 @@ public class StatisticsActivity extends AppCompatActivity {
             dailyStoriesCount.put(dateKey, 0L);
             dailyRevenue.put(dateKey, 0L);
             dailyViews.put(dateKey, 0L);
-            dailyUsersJoined.put(dateKey, 0L);
+            dailyUsersJoined.put(dateKey, 0L); // Nếu không dùng, bỏ cũng được
             currentCal.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        // --- Fetch Total Users ---
-        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long totalUsersOverall = 0;
-                if (snapshot.exists()) {
-                    totalUsersOverall = snapshot.getChildrenCount(); // Count direct children of "users" node
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        String joinDateStr = userSnapshot.child("joinDate").getValue(String.class);
-                        if (joinDateStr != null && !joinDateStr.isEmpty()) {
-                            try {
-                                Date joinDate = displayDateFormat.parse(joinDateStr); // Assuming joinDate is dd/MM/yyyy
-                                // We don't filter totalUsersOverall by date, but dailyUsersJoined is filtered
-                                if (!joinDate.before(finalFromDate) && joinDate.before(finalToDate)) {
-                                    String dateKey = firebaseCreationDateFormat.format(joinDate);
-                                    dailyUsersJoined.put(dateKey, dailyUsersJoined.getOrDefault(dateKey, 0L) + 1);
-                                }
-                            } catch (ParseException e) {
-                                Log.e(TAG, "Error parsing joinDate of user: '" + joinDateStr + "'. Error: " + e.getMessage());
-                            }
-                        }
-                    }
-                }
-                tvTotalUsers.setText(String.valueOf(totalUsersOverall));
-
-                // Now proceed to fetch stories and transactions
-                fetchStoriesAndTransactions(finalFromDate, finalToDate, dailyStoriesCount, dailyRevenue, dailyViews, dailyUsersJoined, totalUsersOverall);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Firebase error loading total users: " + error.getMessage());
-                Toast.makeText(StatisticsActivity.this, "Lỗi tải tổng số tài khoản: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                // Even if user fetch fails, try to load other stats
-                fetchStoriesAndTransactions(finalFromDate, finalToDate, dailyStoriesCount, dailyRevenue, dailyViews, new TreeMap<>(), 0); // Pass empty map and 0 for users
-            }
-        });
+        // Bỏ đếm user, gọi thẳng:
+        fetchStoriesAndTransactions(finalFromDate, finalToDate,
+                dailyStoriesCount, dailyRevenue, dailyViews, dailyUsersJoined, 0); // totalUsersOverall=0
     }
+
 
     /**
      * Helper method to fetch stories and transaction data after total users are fetched.
@@ -410,7 +470,7 @@ public class StatisticsActivity extends AppCompatActivity {
                             for (DataSnapshot userPurchasesSnapshot : giaoDichSnapshot.getChildren()) {
                                 for (DataSnapshot purchaseSnapshot : userPurchasesSnapshot.getChildren()) {
                                     String purchaseDateStr = purchaseSnapshot.child("purchaseDate").getValue(String.class);
-                                    String priceStr = purchaseSnapshot.child("packagePrice").getValue(String.class); // Use packagePrice as per your data
+                                    String priceStr = purchaseSnapshot.child("packagePrice").getValue(String.class);
 
                                     if (purchaseDateStr != null && !purchaseDateStr.isEmpty() && priceStr != null && !priceStr.isEmpty()) {
                                         try {
@@ -418,7 +478,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
                                             if (!purchaseDate.before(finalFromDate) && purchaseDate.before(finalToDate)) {
                                                 String cleanedPriceStr = priceStr.replaceAll("[^\\d]", "");
-                                                long revenueToday = Long.parseLong(cleanedPriceStr); // Use Long.parseLong for price
+                                                long revenueToday = Long.parseLong(cleanedPriceStr);
                                                 dailyRevenue.put(firebaseCreationDateFormat.format(purchaseDate), dailyRevenue.getOrDefault(firebaseCreationDateFormat.format(purchaseDate), 0L) + revenueToday);
                                                 totalRevenueOverall += revenueToday;
                                             }
@@ -440,7 +500,7 @@ public class StatisticsActivity extends AppCompatActivity {
                         tvTotalRevenue.setText(String.format(Locale.getDefault(), "%,d VNĐ", totalRevenueOverall));
 
                         // Update charts
-                        updatePieChartOverall(finalTotalViews, finalTotalStoriesPublished); // Updated PieChart call
+                        updatePieChartOverall(finalTotalViews, finalTotalStoriesPublished, totalUsersOverall); // Updated PieChart call
                         updateBarChartRevenueOverPeriod(dailyRevenue, finalFromDate, finalToDate); // BarChart for daily revenue
                         updateLineChartDailyStats(dailyViews, dailyStoriesCount, dailyRevenue, dailyUsersJoined); // LineChart for daily stats
 
@@ -476,11 +536,12 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     /**
-     * Updates the PieChart with overall statistics (Views, Stories).
+     * Updates the PieChart with overall statistics (Views, Stories, Users).
      * @param totalViews The total view count in the selected period.
      * @param totalStories The total count of stories published in the selected period.
+     * @param totalUsers The total count of user accounts.
      */
-    private void updatePieChartOverall(long totalViews, long totalStories) { // Removed totalUsers
+    private void updatePieChartOverall(long totalViews, long totalStories, long totalUsers) { // Added totalUsers back
         ArrayList<PieEntry> entries = new ArrayList<>();
         if (totalViews > 0) {
             entries.add(new PieEntry(totalViews, "Lượt đọc"));
@@ -488,7 +549,9 @@ public class StatisticsActivity extends AppCompatActivity {
         if (totalStories > 0) {
             entries.add(new PieEntry(totalStories, "Số truyện"));
         }
-        // totalUsers is no longer part of the PieChart as per new requirement
+        if (totalUsers > 0) { // Include totalUsers if it's greater than 0
+            entries.add(new PieEntry(totalUsers, "Tài khoản"));
+        }
 
         if (entries.isEmpty()) {
             pieChartOverall.clear();
@@ -501,10 +564,11 @@ public class StatisticsActivity extends AppCompatActivity {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
-        // Adjusted colors for 2 slices
+        // Adjusted colors for 3 slices
         final int[] PIE_COLORS = {
-                Color.parseColor("#FFC107"), // Yellow for Views
-                Color.parseColor("#9E9E9E")  // Gray for Total Stories
+                Color.parseColor("#FFC107"), // Vàng cho Lượt đọc
+                Color.parseColor("#9E9E9E"), // Xám cho Tổng truyện
+                Color.parseColor("#2196F3")  // Xanh dương cho Tổng số tài khoản
         };
         dataSet.setColors(PIE_COLORS);
 
@@ -592,39 +656,35 @@ public class StatisticsActivity extends AppCompatActivity {
                                            Map<String, Long> dailyRevenue, Map<String, Long> dailyUsersJoined) {
         ArrayList<Entry> viewsEntries = new ArrayList<>();
         ArrayList<Entry> storiesEntries = new ArrayList<>();
-        ArrayList<Entry> revenueEntries = new ArrayList<>();
         ArrayList<Entry> usersEntries = new ArrayList<>();
         List<String> xAxisLabels = new ArrayList<>();
 
-        // Combine all unique dates from all daily maps and sort them
+        // Kết hợp tất cả ngày duy nhất từ dailyViews, dailyStories, dailyUsersJoined
         Map<String, Long> allDates = new TreeMap<>();
         allDates.putAll(dailyViews);
         allDates.putAll(dailyStories);
-        allDates.putAll(dailyRevenue);
         allDates.putAll(dailyUsersJoined);
 
         int i = 0;
         for (String dateKey : allDates.keySet()) {
             long views = dailyViews.getOrDefault(dateKey, 0L);
             long stories = dailyStories.getOrDefault(dateKey, 0L);
-            long revenue = dailyRevenue.getOrDefault(dateKey, 0L);
             long users = dailyUsersJoined.getOrDefault(dateKey, 0L);
 
             viewsEntries.add(new Entry(i, views));
             storiesEntries.add(new Entry(i, stories));
-            revenueEntries.add(new Entry(i, revenue));
             usersEntries.add(new Entry(i, users));
 
             try {
                 Date date = firebaseCreationDateFormat.parse(dateKey);
-                xAxisLabels.add(displayDateFormat.format(date)); // Label as dd/MM/yyyy
+                xAxisLabels.add(displayDateFormat.format(date));
             } catch (ParseException e) {
-                xAxisLabels.add(dateKey); // Fallback
+                xAxisLabels.add(dateKey);
             }
             i++;
         }
 
-        if (viewsEntries.isEmpty() && storiesEntries.isEmpty() && revenueEntries.isEmpty() && usersEntries.isEmpty()) {
+        if (viewsEntries.isEmpty() && storiesEntries.isEmpty() && usersEntries.isEmpty()) {
             lineChartDailyStats.clear();
             lineChartDailyStats.setNoDataText("Không có dữ liệu thống kê hàng ngày trong khoảng thời gian này.");
             lineChartDailyStats.invalidate();
@@ -632,34 +692,28 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         LineDataSet viewsDataSet = new LineDataSet(viewsEntries, "Lượt đọc");
-        viewsDataSet.setColor(Color.parseColor("#FFC107")); // Yellow
+        viewsDataSet.setColor(Color.parseColor("#FFC107")); // Vàng
         viewsDataSet.setCircleColor(Color.parseColor("#FFC107"));
         viewsDataSet.setLineWidth(2f);
         viewsDataSet.setCircleRadius(3f);
-        viewsDataSet.setDrawValues(false); // Hide values on line
+        viewsDataSet.setDrawValues(false);
 
         LineDataSet storiesDataSet = new LineDataSet(storiesEntries, "Số truyện");
-        storiesDataSet.setColor(Color.parseColor("#9E9E9E")); // Gray
+        storiesDataSet.setColor(Color.parseColor("#9E9E9E")); // Xám
         storiesDataSet.setCircleColor(Color.parseColor("#9E9E9E"));
         storiesDataSet.setLineWidth(2f);
         storiesDataSet.setCircleRadius(3f);
         storiesDataSet.setDrawValues(false);
 
-        LineDataSet revenueDataSet = new LineDataSet(revenueEntries, "Doanh thu");
-        revenueDataSet.setColor(Color.parseColor("#03A9F4")); // Blue
-        revenueDataSet.setCircleColor(Color.parseColor("#03A9F4"));
-        revenueDataSet.setLineWidth(2f);
-        revenueDataSet.setCircleRadius(3f);
-        revenueDataSet.setDrawValues(false);
-
         LineDataSet usersDataSet = new LineDataSet(usersEntries, "Tài khoản");
-        usersDataSet.setColor(Color.parseColor("#FF5722")); // Orange
+        usersDataSet.setColor(Color.parseColor("#FF5722")); // Cam
         usersDataSet.setCircleColor(Color.parseColor("#FF5722"));
         usersDataSet.setLineWidth(2f);
         usersDataSet.setCircleRadius(3f);
         usersDataSet.setDrawValues(false);
 
-        LineData lineData = new LineData(viewsDataSet, storiesDataSet, revenueDataSet, usersDataSet);
+        // Chỉ thêm 3 dataset (không thêm revenueDataSet)
+        LineData lineData = new LineData(viewsDataSet, storiesDataSet, usersDataSet);
         lineChartDailyStats.setData(lineData);
 
         lineChartDailyStats.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabels));

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.doan" >
+    package="com.example.doan">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,7 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DoAn"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".adminactivity.PendingAuthorRequestsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".adapter.PendingAuthorRequestAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".ui.RegisterAuthorActivity"
+            android:exported="false" />
         <activity
             android:name=".adminactivity.EditChapters"
             android:exported="false" />
@@ -28,7 +37,6 @@
         <activity
             android:name=".adminactivity.StatisticsActivity"
             android:exported="false" />
-
         <activity
             android:name=".adminactivity.PendingStoriesActivity"
             android:exported="false" />
@@ -58,8 +66,7 @@
             android:exported="true" />
         <activity
             android:name=".adminactivity.PremiumManagementActivity"
-            android:exported="true"
-            />
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.gms.auth.api.signin.v2.GoogleSignIn"
@@ -104,7 +111,7 @@
             android:exported="true" />
         <activity
             android:name=".account.HomePage"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

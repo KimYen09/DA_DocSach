@@ -505,6 +505,7 @@ import com.example.doan.model.Story;
 import com.example.doan.premium.Premium;
 import com.example.doan.premium.PremiumManager; // Thêm import này
 import com.example.doan.ui.ChapterListActivity;
+import com.example.doan.ui.RegisterAuthorActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -517,7 +518,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
-    private ImageView imvPremium;
+    private ImageView imvPremium, imvRegisterAuthor;
     private RecyclerView recyclerView, recyclerViewPre;
     private StoryAdapter storyAdapter, storyAdapterPre;
     private List<Story> storyList, storyListPre;
@@ -542,6 +543,7 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerViewPre = view.findViewById(R.id.dspre);
         imvPremium = view.findViewById(R.id.imvPremium);
+        imvRegisterAuthor = view.findViewById(R.id.imvRegisterAuthor);
 
         // Khởi tạo SharedPreferences
         sharedPreferences = requireActivity().getSharedPreferences(PREMIUM_PREFS_NAME, MODE_PRIVATE);
@@ -557,6 +559,12 @@ public class HomeFragment extends Fragment {
         storyListPre = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("stories");
 
+        imvRegisterAuthor.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), RegisterAuthorActivity.class);
+            startActivity(intent);
+
+        });
+
         // Tắt cache Firebase (có thể gây ra hành vi không mong muốn nếu cần dữ liệu offline)
         // databaseReference.keepSynced(false);
         // databaseReference.getDatabase().purgeOutstandingWrites();
@@ -566,6 +574,7 @@ public class HomeFragment extends Fragment {
         // Set OnClickListener for imvPremium
         imvPremium.setOnClickListener(v -> startActivity(new Intent(getActivity(), Premium.class)));
         return view;
+
     }
 
     private void setupBanner() {
