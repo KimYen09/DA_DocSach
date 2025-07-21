@@ -1,89 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".adminactivity.PendingStoriesActivity">
+    android:background="@color/white">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/novel"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/white"
+        android:title="Quản lý truyện"
+        android:titleTextColor="@android:color/black"
+        android:elevation="4dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Truyện chờ duyệt"
-        app:titleTextColor="@color/white" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Search Section -->
+    <!-- Search input - Không dùng TextInputLayout -->
     <LinearLayout
         android:id="@+id/searchLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@android:drawable/ic_menu_search"
+            app:tint="@android:color/darker_gray" />
 
         <EditText
             android:id="@+id/editTextSearchPendingStory"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:background="@android:drawable/editbox_background"
+            android:background="@android:color/transparent"
             android:hint="Tìm kiếm truyện..."
-            android:padding="12dp"
-            android:drawablePadding="8dp"
-            android:textSize="14sp" />
-
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:paddingVertical="4dp"
+            android:inputType="text" />
     </LinearLayout>
 
-    <!-- Stats Section -->
-    <LinearLayout
-        android:id="@+id/statsLayout"
-        android:layout_width="match_parent"
+    <!-- Tổng số truyện -->
+    <TextView
+        android:id="@+id/totalPendingStoriesTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@color/novel"
-        app:layout_constraintTop_toBottomOf="@id/searchLayout">
-
-        <TextView
-            android:id="@+id/totalPendingStoriesTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Tổng: 0 truyện"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/statusTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chờ duyệt"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:background="@color/novel3"
-            android:padding="8dp"
-            android:layout_marginStart="8dp" />
-
-    </LinearLayout>
-
-    <!-- RecyclerView for Pending Stories -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPendingStories"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/statsLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="Tổng số truyện: 0"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/searchLayout"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Progress Bar -->
     <ProgressBar
@@ -91,12 +75,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/recyclerViewPendingStories"
-        app:layout_constraintBottom_toBottomOf="@id/recyclerViewPendingStories"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Empty State -->
+    <!-- Empty State Layout -->
     <LinearLayout
         android:id="@+id/emptyStateLayout"
         android:layout_width="wrap_content"
@@ -104,15 +88,15 @@
         android:orientation="vertical"
         android:gravity="center"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/recyclerViewPendingStories"
-        app:layout_constraintBottom_toBottomOf="@id/recyclerViewPendingStories"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:src="@android:drawable/ic_menu_recent_history"
+            android:src="@android:drawable/ic_menu_gallery"
             android:alpha="0.5" />
 
         <TextView
@@ -124,5 +108,18 @@
             android:layout_marginTop="16dp" />
 
     </LinearLayout>
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPendingStories"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/totalPendingStoriesTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

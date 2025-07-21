@@ -13,6 +13,18 @@
         ".write": "root.child('users').child(auth.uid).child('role').val() == 'author'"
       }
     },
+    "pending_stories": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$storyId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "admins": {
+      ".read": "auth != null",
+      ".write": false
+    },
     "premium": {
       ".read": "auth != null",
       ".write": "auth.uid != null && root.child('admins').hasChild(auth.uid)"

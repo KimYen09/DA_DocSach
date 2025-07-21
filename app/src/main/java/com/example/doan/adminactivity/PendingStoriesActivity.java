@@ -86,6 +86,11 @@ public class PendingStoriesActivity extends AppCompatActivity implements StoryAd
         // Initialize UI
         initializeViews();
 
+        // Proceed directly to load data (no admin check needed)
+        proceedWithDataLoading();
+    }
+
+    private void proceedWithDataLoading() {
         // Kiểm tra nếu có view nào bị null
         if (recyclerView == null || totalStoriesTextView == null || emptyStateLayout == null) {
             Log.e(TAG, "Critical views are null! Layout might have issues.");
@@ -415,9 +420,9 @@ public class PendingStoriesActivity extends AppCompatActivity implements StoryAd
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e(TAG, "Firebase error: " + error.getMessage());
-                Toast.makeText(PendingStoriesActivity.this,
-                    "Lỗi Firebase: " + error.getMessage() + ". Sử dụng dữ liệu test.",
-                    Toast.LENGTH_LONG).show();
+
+                String errorMessage = "Lỗi Firebase: " + error.getMessage() + ". Sử dụng dữ liệu test.";
+                Toast.makeText(PendingStoriesActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
     }
