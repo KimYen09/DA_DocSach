@@ -14,9 +14,11 @@ public class Story {
     private HashMap<String, Object> chapters;
     private String creationDate;
     private long viewCount;
+    private boolean isPremium; // Thêm trường này để đánh dấu truyện premium
 
     // Constructor mặc định (cần thiết cho Firebase)
     public Story() {
+        this.isPremium = false; // Mặc định không phải premium
     }
 
     // Constructor đầy đủ
@@ -33,6 +35,24 @@ public class Story {
         this.chapters = chapters;
         this.creationDate = creationDate;
         this.viewCount = viewCount;
+        this.isPremium = false; // Mặc định không phải premium
+    }
+
+    // Constructor với isPremium
+    public Story(String id, String title, String description, String category,
+                 String imageResource, String type, String userId,
+                 HashMap<String, Object> chapters, String creationDate, long viewCount, boolean isPremium) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.imageResource = imageResource;
+        this.type = type;
+        this.userId = userId;
+        this.chapters = chapters;
+        this.creationDate = creationDate;
+        this.viewCount = viewCount;
+        this.isPremium = isPremium;
     }
 
     // Constructor với 9 tham số (cho AddStory/EditStory)
@@ -49,6 +69,7 @@ public class Story {
         this.chapters = chapters;
         this.creationDate = creationDate;
         this.viewCount = 0;
+        this.isPremium = false; // Mặc định không phải premium
     }
 
     // Constructor với 8 tham số
@@ -65,6 +86,7 @@ public class Story {
         this.chapters = chapters;
         this.creationDate = "";
         this.viewCount = 0;
+        this.isPremium = false; // Mặc định không phải premium
     }
 
     // Getters
@@ -113,6 +135,10 @@ public class Story {
         return viewCount;
     }
 
+    public boolean isPremium() {
+        return isPremium;
+    }
+
     // Setters
     public void setId(String id) {
         this.id = id;
@@ -157,5 +183,9 @@ public class Story {
 
     public void setViewCount(long viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public void setPremium(boolean premium) {
+        this.isPremium = premium;
     }
 }

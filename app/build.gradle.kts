@@ -52,6 +52,9 @@ dependencies {
 
     // Google Play Services cho Google Sign-In (phiên bản ổn định)
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    // Thêm Google Play Services Base để khắc phục lỗi SecurityException
+    implementation("com.google.android.gms:play-services-base:18.3.0")
+    implementation("com.google.android.gms:play-services-basement:18.3.0")
 
     // UI dependencies
     implementation("androidx.fragment:fragment-ktx:1.8.8")

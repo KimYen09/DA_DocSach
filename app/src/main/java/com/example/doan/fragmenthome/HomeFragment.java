@@ -1,4 +1,3 @@
-
 //
 //
 //package com.example.doan.fragmenthome;
@@ -367,13 +366,26 @@
 //            }
 //            Toast.makeText(getContext(), "Bạn đã chọn: " + story.getTitle(), Toast.LENGTH_SHORT).show();
 //
-//            // --- LOGIC TĂNG LƯỢT ĐỌC (luotDoc/viewCount) ---
-//            incrementViewCount(story.getId());
+//            // --- LOGIC KHÓA TRUYỆN PREMIUM ---
+//            boolean isUserPremium = sharedPreferences.getBoolean(KEY_IS_USER_PREMIUM, false); // Đọc trạng thái Premium của người dùng
 //
-//            // Chuyển sang ChapterListActivity
-//            Intent intent = new Intent(getContext(), ChapterListActivity.class);
-//            intent.putExtra("storyId", story.getId());
-//            startActivity(intent);
+//            if (story.getType() != null && story.getType().trim().equalsIgnoreCase("Premium") && !isUserPremium) {
+//                // Nếu truyện là Premium VÀ người dùng KHÔNG phải Premium
+//                Toast.makeText(getContext(), "Truyện này dành cho thành viên Premium. Vui lòng nâng cấp!", Toast.LENGTH_LONG).show();
+//                // Chuyển hướng đến Activity Premium
+//                Intent intent = new Intent(getContext(), Premium.class);
+//                startActivity(intent);
+//                Log.d(TAG, "Người dùng không Premium, chuyển hướng đến trang Premium.");
+//            } else {
+//                // Nếu truyện không phải Premium HOẶC người dùng là Premium
+//                // Tăng lượt đọc và chuyển sang ChapterListActivity
+//                incrementViewCount(story.getId());
+//
+//                Intent intent = new Intent(getContext(), ChapterListActivity.class);
+//                intent.putExtra("storyId", story.getId());
+//                startActivity(intent);
+//                Log.d(TAG, "Truyện không Premium hoặc người dùng là Premium, mở ChapterListActivity.");
+//            }
 //        });
 //    }
 //
@@ -429,6 +441,11 @@
 //    @Override
 //    public void onResume() {
 //        super.onResume();
+//        // Cập nhật trạng thái Premium của người dùng mỗi khi Fragment được hiển thị lại
+//        // (ví dụ: sau khi người dùng quay lại từ màn hình Premium)
+//        // Bạn có thể cần thêm logic để đọc trạng thái Premium từ Firebase/Auth ở đây
+//        // nếu trạng thái này không chỉ được lưu trong SharedPreferences.
+//        // Ví dụ: checkUserPremiumStatusFromFirebase();
 //        if (bannerImages != null && !bannerImages.isEmpty()) {
 //            handler.postDelayed(runnable, 3000);
 //        }
@@ -442,7 +459,7 @@
 //
 //    private final Runnable runnable = new Runnable() {
 //        @Override
-//        public void run() {
+//        public void run() { // Đã sửa 'void run()' thành 'run()'
 //            if (bannerViewPager != null && bannerImages != null && !bannerImages.isEmpty()) {
 //                int currentItem = bannerViewPager.getCurrentItem();
 //                bannerViewPager.setCurrentItem(currentItem + 1, true);
@@ -456,8 +473,8 @@
 //        super.onDestroyView();
 //        handler.removeCallbacks(runnable);
 //    }
-//}
 //
+
 
 package com.example.doan.fragmenthome;
 
@@ -486,6 +503,7 @@ import com.example.doan.adapter.BannerAdapter;
 import com.example.doan.adapter.StoryAdapter;
 import com.example.doan.model.Story;
 import com.example.doan.premium.Premium;
+import com.example.doan.premium.PremiumManager; // Thêm import này
 import com.example.doan.ui.ChapterListActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -626,25 +644,46 @@ public class HomeFragment extends Fragment {
             }
             Toast.makeText(getContext(), "Bạn đã chọn: " + story.getTitle(), Toast.LENGTH_SHORT).show();
 
-            // --- LOGIC KHÓA TRUYỆN PREMIUM ---
-            boolean isUserPremium = sharedPreferences.getBoolean(KEY_IS_USER_PREMIUM, false); // Đọc trạng thái Premium của người dùng
+            // --- LOGIC KHÓA TRUYỆN PREMIUM (CẬP NHẬT) ---
+            // Kiểm tra xem truyện có phải premium không
+            if (story.getType() != null && story.getType().trim().equalsIgnoreCase("Premium")) {
+                // Nếu là truyện premium, kiểm tra trạng thái premium từ Firebase
+                PremiumManager premiumManager = new PremiumManager(getContext());
+                premiumManager.refreshPremiumStatus(new PremiumManager.PremiumCheckCallback() {
+                    @Override
+                    public void onResult(boolean isPremium) {
+                        if (isPremium) {
+                            // Người dùng có premium, cho phép truy cập
+                            Log.d(TAG, "Người dùng có Premium, mở truyện premium: " + story.getTitle());
+                            incrementViewCount(story.getId());
 
-            if (story.getType() != null && story.getType().trim().equalsIgnoreCase("Premium") && !isUserPremium) {
-                // Nếu truyện là Premium VÀ người dùng KHÔNG phải Premium
-                Toast.makeText(getContext(), "Truyện này dành cho thành viên Premium. Vui lòng nâng cấp!", Toast.LENGTH_LONG).show();
-                // Chuyển hướng đến Activity Premium
-                Intent intent = new Intent(getContext(), Premium.class);
-                startActivity(intent);
-                Log.d(TAG, "Người dùng không Premium, chuyển hướng đến trang Premium.");
+                            Intent intent = new Intent(getContext(), ChapterListActivity.class);
+                            intent.putExtra("storyId", story.getId());
+                            startActivity(intent);
+                        } else {
+                            // Người dùng chưa có premium, yêu cầu nâng cấp
+                            Log.d(TAG, "Người dùng không Premium, chuyển hướng đến trang Premium.");
+                            Toast.makeText(getContext(), "Truyện này dành cho thành viên Premium. Vui lòng nâng cấp!", Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(getContext(), Premium.class);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.e(TAG, "Lỗi kiểm tra trạng thái premium: " + error);
+                        Toast.makeText(getContext(), "Lỗi kiểm tra trạng thái premium. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
-                // Nếu truyện không phải Premium HOẶC người dùng là Premium
-                // Tăng lượt đọc và chuyển sang ChapterListActivity
+                // Nếu truyện không phải Premium, cho phép truy cập ngay
+                Log.d(TAG, "Truyện miễn phí, mở ngay: " + story.getTitle());
                 incrementViewCount(story.getId());
 
                 Intent intent = new Intent(getContext(), ChapterListActivity.class);
                 intent.putExtra("storyId", story.getId());
                 startActivity(intent);
-                Log.d(TAG, "Truyện không Premium hoặc người dùng là Premium, mở ChapterListActivity.");
             }
         });
     }
@@ -733,4 +772,3 @@ public class HomeFragment extends Fragment {
         handler.removeCallbacks(runnable);
     }
 }
-

@@ -39,6 +39,12 @@
         ".write": "auth != null && auth.uid == $userId"
       }
     },
+    "UserPremiumStatus": {
+      "$userId": {
+        ".read": "auth != null && auth.uid == $userId",
+        ".write": "auth != null && auth.uid == $userId"
+      }
+    },
     "giaoDich": {
       ".read": "auth != null",
       ".write": "auth != null",
