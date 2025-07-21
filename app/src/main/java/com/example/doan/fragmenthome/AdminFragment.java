@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.doan.R;
 import com.example.doan.adminactivity.PendingAuthorRequestsActivity;
 import com.example.doan.adminactivity.PendingStoriesActivity;
+import com.example.doan.adminactivity.PremiumPackageManagementActivity;
 import com.example.doan.adminactivity.StatisticsActivity;
 import com.google.android.material.button.MaterialButton;
 
@@ -80,10 +81,11 @@ public class AdminFragment extends Fragment {
         // OnClickListener cho nút "Quản lý gói Premium"
         if (btnPremiumManagement != null) {
             btnPremiumManagement.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), PremiumManagementActivity.class);
+                Intent intent = new Intent(getActivity(), PremiumPackageManagementActivity.class);
                 startActivity(intent);
             });
         }
+
         if (btnauthor != null) { // Kiểm tra null
             btnauthor.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), PendingAuthorRequestsActivity.class);

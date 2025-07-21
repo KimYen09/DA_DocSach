@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PremiumManagementActivity extends AppCompatActivity implements PremiumPackageAdapter.OnPackageActionListener {
+public class PremiumManagementActivity extends AppCompatActivity implements PremiumPackageAdapter.OnPremiumPackageListener {
     private RecyclerView recyclerViewPremium;
     private FloatingActionButton fabAddPremium;
     private LinearLayout layoutEmpty;
@@ -69,7 +69,6 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
 
     private void setupClickListeners() {
         fabAddPremium.setOnClickListener(v -> showAddEditDialog(null));
-
         btnBack.setOnClickListener(v -> finish());
     }
 
@@ -92,8 +91,8 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(PremiumManagementActivity.this,
-                    "Lỗi khi tải dữ liệu: " + databaseError.getMessage(),
-                    Toast.LENGTH_SHORT).show();
+                        "Lỗi khi tải dữ liệu: " + databaseError.getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -117,6 +116,7 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
         TextInputEditText etDescription = dialogView.findViewById(R.id.etDescription);
         TextInputEditText etPrice = dialogView.findViewById(R.id.etPrice);
         TextInputEditText etDuration = dialogView.findViewById(R.id.etDuration);
+        TextInputEditText etFeatures = dialogView.findViewById(R.id.etFeatures);
         Button btnCancel = dialogView.findViewById(R.id.btnCancel);
         Button btnSave = dialogView.findViewById(R.id.btnSave);
 
@@ -127,9 +127,11 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
             etDescription.setText(packageToEdit.getDescription());
             etPrice.setText(String.valueOf(packageToEdit.getPrice()));
             etDuration.setText(String.valueOf(packageToEdit.getDuration()));
+            etFeatures.setText(packageToEdit.getFeatures());
             btnSave.setText("Cập nhật");
         } else {
             tvTitle.setText("Thêm gói Premium");
+            etFeatures.setText("Đọc truyện premium,Không quảng cáo,Tải offline");
             btnSave.setText("Thêm");
         }
 
@@ -142,22 +144,32 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
             String description = etDescription.getText() != null ? etDescription.getText().toString().trim() : "";
             String priceStr = etPrice.getText() != null ? etPrice.getText().toString().trim() : "";
             String durationStr = etDuration.getText() != null ? etDuration.getText().toString().trim() : "";
+            String features = etFeatures.getText() != null ? etFeatures.getText().toString().trim() : "";
 
             // Kiểm tra validation
             if (name.isEmpty()) {
                 etName.setError("Vui lòng nhập tên gói");
+                etName.requestFocus();
                 return;
             }
             if (description.isEmpty()) {
                 etDescription.setError("Vui lòng nhập mô tả");
+                etDescription.requestFocus();
                 return;
             }
             if (priceStr.isEmpty()) {
                 etPrice.setError("Vui lòng nhập giá");
+                etPrice.requestFocus();
                 return;
             }
             if (durationStr.isEmpty()) {
                 etDuration.setError("Vui lòng nhập thời hạn");
+                etDuration.requestFocus();
+                return;
+            }
+            if (features.isEmpty()) {
+                etFeatures.setError("Vui lòng nhập tính năng");
+                etFeatures.requestFocus();
                 return;
             }
 
@@ -167,19 +179,21 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
 
                 if (price <= 0) {
                     etPrice.setError("Giá phải lớn hơn 0");
+                    etPrice.requestFocus();
                     return;
                 }
                 if (duration <= 0) {
                     etDuration.setError("Thời hạn phải lớn hơn 0");
+                    etDuration.requestFocus();
                     return;
                 }
 
                 if (packageToEdit != null) {
                     // Cập nhật gói
-                    updatePremiumPackage(packageToEdit.getId(), name, description, price, duration);
+                    updatePremiumPackage(packageToEdit.getId(), name, description, price, duration, features);
                 } else {
                     // Thêm gói mới
-                    addPremiumPackage(name, description, price, duration);
+                    addPremiumPackage(name, description, price, duration, features);
                 }
                 dialog.dismiss();
 
@@ -191,8 +205,9 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
         dialog.show();
     }
 
-    private void addPremiumPackage(String name, String description, double price, int duration) {
-        PremiumPackage newPackage = new PremiumPackage(name, description, price, duration);
+    private void addPremiumPackage(String name, String description, double price, int duration, String features) {
+        // Sửa constructor để khớp với PremiumPackage mới: tenGoi, gia, ngaySD, description, features
+        PremiumPackage newPackage = new PremiumPackage(name, price, duration, description, features);
 
         DatabaseReference newRef = databaseReference.push();
         newRef.setValue(newPackage)
@@ -204,38 +219,18 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
                 });
     }
 
-    private void updatePremiumPackage(String packageId, String name, String description, double price, int duration) {
-        DatabaseReference packageRef = databaseReference.child(packageId);
+    private void updatePremiumPackage(String packageId, String name, String description, double price, int duration, String features) {
+        // Sửa constructor để khớp với PremiumPackage mới: tenGoi, gia, ngaySD, description, features
+        PremiumPackage updatedPackage = new PremiumPackage(name, price, duration, description, features);
+        updatedPackage.setId(packageId);
 
-        packageRef.child("name").setValue(name);
-        packageRef.child("description").setValue(description);
-        packageRef.child("price").setValue(price);
-        packageRef.child("duration").setValue(duration);
-
-        packageRef.updateChildren(null)
+        databaseReference.child(packageId).setValue(updatedPackage)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Cập nhật gói Premium thành công!", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Lỗi khi cập nhật gói: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-    }
-
-    @Override
-    public void onEditPackage(PremiumPackage premiumPackage) {
-        showAddEditDialog(premiumPackage);
-    }
-
-    @Override
-    public void onDeletePackage(PremiumPackage premiumPackage) {
-        new AlertDialog.Builder(this)
-                .setTitle("Xác nhận xóa")
-                .setMessage("Bạn có chắc chắn muốn xóa gói \"" + premiumPackage.getName() + "\"?")
-                .setPositiveButton("Xóa", (dialog, which) -> {
-                    deletePremiumPackage(premiumPackage.getId());
-                })
-                .setNegativeButton("Hủy", null)
-                .show();
     }
 
     private void deletePremiumPackage(String packageId) {
@@ -247,4 +242,57 @@ public class PremiumManagementActivity extends AppCompatActivity implements Prem
                     Toast.makeText(this, "Lỗi khi xóa gói: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
+    private void updatePackageActiveStatus(String packageId, boolean isActive) {
+        databaseReference.child(packageId).child("active").setValue(isActive)
+                .addOnSuccessListener(aVoid -> {
+                    String status = isActive ? "kích hoạt" : "vô hiệu hóa";
+                    Toast.makeText(this, "Đã " + status + " gói thành công!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi khi cập nhật trạng thái: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    // Implement interface methods
+    @Override
+    public void onEditClick(PremiumPackage package_) {
+        showAddEditDialog(package_);
+    }
+
+    @Override
+    public void onDeleteClick(PremiumPackage package_) {
+        new AlertDialog.Builder(this)
+                .setTitle("Xác nhận xóa")
+                .setMessage("Bạn có chắc chắn muốn xóa gói \"" + package_.getName() + "\" không?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    deletePremiumPackage(package_.getId());
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
+    @Override
+    public void onEditPackage(PremiumPackage premiumPackage) {
+        showAddEditDialog(premiumPackage);
+    }
+
+    @Override
+    public void onDeletePackage(PremiumPackage premiumPackage) {
+        new AlertDialog.Builder(this)
+                .setTitle("Xác nhận xóa")
+                .setMessage("Bạn có chắc chắn muốn xóa gói \"" + premiumPackage.getName() + "\" không?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    deletePremiumPackage(premiumPackage.getId());
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
+    @Override
+    public void onToggleActiveStatus(PremiumPackage premiumPackage, boolean isActive) {
+        updatePackageActiveStatus(premiumPackage.getId(), isActive);
+    }
 }
+
+
