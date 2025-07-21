@@ -151,6 +151,7 @@ public class StatisticsActivity extends AppCompatActivity {
             calendar.setTime(currentDisplayedDate);
         } catch (ParseException e) {
             Log.e(TAG, "Error parsing current date from EditText for DatePicker: " + e.getMessage() + ". Using current system date.");
+            // If parsing fails, use the current system date for the DatePicker
         }
 
         int year = calendar.get(Calendar.YEAR);
@@ -324,7 +325,8 @@ public class StatisticsActivity extends AppCompatActivity {
                         if (joinDateStr != null && !joinDateStr.isEmpty()) {
                             try {
                                 Date joinDate = displayDateFormat.parse(joinDateStr); // Assuming joinDate is dd/MM/yyyy
-                                if (!joinDate.before(finalFromDate) && joinDate.before(finalToDate)) { // Only count users joined in selected period
+                                // We don't filter totalUsersOverall by date, but dailyUsersJoined is filtered
+                                if (!joinDate.before(finalFromDate) && joinDate.before(finalToDate)) {
                                     String dateKey = firebaseCreationDateFormat.format(joinDate);
                                     dailyUsersJoined.put(dateKey, dailyUsersJoined.getOrDefault(dateKey, 0L) + 1);
                                 }
@@ -364,7 +366,7 @@ public class StatisticsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long totalStoriesPublishedOverall = 0;
-                long totalViewsOverall = 0;
+                long totalViewsOverall = 0; // This will be the sum of daily views
 
                 if (snapshot.exists()) {
                     for (DataSnapshot storySnapshot : snapshot.getChildren()) {
@@ -408,7 +410,7 @@ public class StatisticsActivity extends AppCompatActivity {
                             for (DataSnapshot userPurchasesSnapshot : giaoDichSnapshot.getChildren()) {
                                 for (DataSnapshot purchaseSnapshot : userPurchasesSnapshot.getChildren()) {
                                     String purchaseDateStr = purchaseSnapshot.child("purchaseDate").getValue(String.class);
-                                    String priceStr = purchaseSnapshot.child("packagePrice").getValue(String.class);
+                                    String priceStr = purchaseSnapshot.child("packagePrice").getValue(String.class); // Use packagePrice as per your data
 
                                     if (purchaseDateStr != null && !purchaseDateStr.isEmpty() && priceStr != null && !priceStr.isEmpty()) {
                                         try {
@@ -416,7 +418,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
                                             if (!purchaseDate.before(finalFromDate) && purchaseDate.before(finalToDate)) {
                                                 String cleanedPriceStr = priceStr.replaceAll("[^\\d]", "");
-                                                long revenueToday = Long.parseLong(cleanedPriceStr);
+                                                long revenueToday = Long.parseLong(cleanedPriceStr); // Use Long.parseLong for price
                                                 dailyRevenue.put(firebaseCreationDateFormat.format(purchaseDate), dailyRevenue.getOrDefault(firebaseCreationDateFormat.format(purchaseDate), 0L) + revenueToday);
                                                 totalRevenueOverall += revenueToday;
                                             }
@@ -438,9 +440,9 @@ public class StatisticsActivity extends AppCompatActivity {
                         tvTotalRevenue.setText(String.format(Locale.getDefault(), "%,d VNĐ", totalRevenueOverall));
 
                         // Update charts
-                        updatePieChartOverall(finalTotalViews, finalTotalStoriesPublished, totalUsersOverall); // New PieChart
-                        updateBarChartRevenueOverPeriod(dailyRevenue, finalFromDate, finalToDate); // New BarChart for revenue over period
-                        updateLineChartDailyStats(dailyViews, dailyStoriesCount, dailyRevenue, dailyUsersJoined); // New LineChart for daily stats
+                        updatePieChartOverall(finalTotalViews, finalTotalStoriesPublished); // Updated PieChart call
+                        updateBarChartRevenueOverPeriod(dailyRevenue, finalFromDate, finalToDate); // BarChart for daily revenue
+                        updateLineChartDailyStats(dailyViews, dailyStoriesCount, dailyRevenue, dailyUsersJoined); // LineChart for daily stats
 
                         progressBarStatistics.setVisibility(View.GONE);
                         pieChartOverall.setVisibility(View.VISIBLE);
@@ -474,12 +476,11 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     /**
-     * Updates the PieChart with overall statistics (Views, Stories, Users).
+     * Updates the PieChart with overall statistics (Views, Stories).
      * @param totalViews The total view count in the selected period.
      * @param totalStories The total count of stories published in the selected period.
-     * @param totalUsers The total count of user accounts.
      */
-    private void updatePieChartOverall(long totalViews, long totalStories, long totalUsers) {
+    private void updatePieChartOverall(long totalViews, long totalStories) { // Removed totalUsers
         ArrayList<PieEntry> entries = new ArrayList<>();
         if (totalViews > 0) {
             entries.add(new PieEntry(totalViews, "Lượt đọc"));
@@ -487,10 +488,7 @@ public class StatisticsActivity extends AppCompatActivity {
         if (totalStories > 0) {
             entries.add(new PieEntry(totalStories, "Số truyện"));
         }
-        // totalUsers is overall, not filtered by date, so it's always included if > 0
-        if (totalUsers > 0) {
-            entries.add(new PieEntry(totalUsers, "Tài khoản"));
-        }
+        // totalUsers is no longer part of the PieChart as per new requirement
 
         if (entries.isEmpty()) {
             pieChartOverall.clear();
@@ -503,10 +501,10 @@ public class StatisticsActivity extends AppCompatActivity {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
+        // Adjusted colors for 2 slices
         final int[] PIE_COLORS = {
-                Color.parseColor("#FFC107"), // Vàng cho Lượt đọc
-                Color.parseColor("#9E9E9E"), // Xám cho Tổng truyện
-                Color.parseColor("#2196F3")  // Xanh dương cho Tổng số tài khoản
+                Color.parseColor("#FFC107"), // Yellow for Views
+                Color.parseColor("#9E9E9E")  // Gray for Total Stories
         };
         dataSet.setColors(PIE_COLORS);
 

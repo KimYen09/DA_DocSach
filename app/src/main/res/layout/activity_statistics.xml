@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:fillViewport="true"
     android:background="@color/white">
 
@@ -15,30 +14,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:padding="16dp"
         android:background="@color/white"
         tools:context=".admin.StatisticsActivity">
-
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/baseline_arrow_back_24"
-            android:contentDescription="Quay lại"
-            android:layout_marginBottom="10dp"/>
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thống kê"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/font_lexend"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:textColor="@color/black"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:contentDescription="Quay lại"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thống kê"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/font_lexend"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+
 
         <!-- Các trường nhập liệu cho bộ lọc thời gian (Từ ngày - Đến ngày) -->
         <LinearLayout
@@ -204,7 +208,6 @@
                     app:tint="@color/novel"/>
 
                 <TextView
-                    android:id="@+id/tvTotalRevenue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tổng doanh thu:"
@@ -214,6 +217,7 @@
                     android:layout_marginStart="8dp"/>
 
                 <TextView
+                    android:id="@+id/tvTotalRevenue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 VNĐ"

@@ -198,13 +198,13 @@ public class ListChapEdit extends AppCompatActivity {
                         } else {
                             // Nếu Chapter không ánh xạ trực tiếp (ví dụ: chỉ là Map<String, Boolean>)
                             // Bạn cần tạo Chapter object thủ công ở đây
-                            String chapterId = chapterSnapshot.getKey();
+                            String Id = chapterSnapshot.getKey();
                             // Bạn cần biết cấu trúc của chapterSnapshot để đọc đúng
                             // Ví dụ nếu nó chỉ là một boolean:
                             // Boolean isCompleted = chapterSnapshot.getValue(Boolean.class);
                             // Chapter simpleChapter = new Chapter(chapterId, "Chương " + chapterId, "");
                             // chapterList.add(simpleChapter);
-                            Log.w(TAG, "Chapter object is null for key: " + chapterId + ". Check Firebase structure for chapters.");
+                            Log.w(TAG, "Chapter object is null for key: " + Id + ". Check Firebase structure for chapters.");
                         }
                     }
                 }
@@ -226,14 +226,14 @@ public class ListChapEdit extends AppCompatActivity {
 
     /**
      * Xóa một chương khỏi Firebase.
-     * @param chapterId ID của chương cần xóa.
+     * @param Id ID của chương cần xóa.
      */
-    private void deleteChapter(String chapterId) {
+    private void deleteChapter(String Id) {
         new AlertDialog.Builder(this)
                 .setMessage("Bạn có chắc chắn muốn xóa chương này?")
                 .setCancelable(false)
                 .setPositiveButton("Xóa", (dialog, which) -> {
-                    chaptersRef.child(chapterId).removeValue()
+                    chaptersRef.child(Id).removeValue()
                             .addOnSuccessListener(aVoid -> {
                                 Toast.makeText(ListChapEdit.this, "Xóa chương thành công", Toast.LENGTH_SHORT).show();
                             })

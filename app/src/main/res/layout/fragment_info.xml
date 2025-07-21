@@ -1,217 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".fragmenthome.InfoFragment">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/avt"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/avatar"
-        app:civ_border_width="2dp"
-        android:layout_gravity="center_horizontal"
-        app:civ_border_color="#FF000000"
-        android:contentDescription="Ảnh đại diện"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- Tên Người Dùng -->
-    <TextView
-        android:id="@+id/txtUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tên người dùng"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/font_lexend"
-        android:gravity="center"
-        android:layout_marginBottom="5dp"/>
-
-    <!-- Email -->
-    <TextView
-        android:id="@+id/txtEmail"
-        android:fontFamily="@font/font_lexend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email người dùng"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp"/>
-
-    <!-- Ngày tham gia -->
-    <TextView
-        android:id="@+id/txtJoinDate"
-        android:fontFamily="@font/font_lexend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tham gia: 01/01/2024"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:layout_marginBottom="10dp"/>
-
-    <!-- Thống kê -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="20dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/txtStoryCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/font_lexend"
-                android:text="0"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/font_lexend"
-                android:text="Truyện"
-                android:textSize="14sp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/txtLikes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:fontFamily="@font/font_lexend"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lượt thích"
-                android:fontFamily="@font/font_lexend"
-                android:textSize="14sp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Nút chức năng (Tất cả là MaterialButton) -->
+    android:paddingBottom="80dp"
+    android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="16dp"> <!-- Khoảng cách từ phần thống kê -->
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEditProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chỉnh sửa hồ sơ"
-            android:fontFamily="@font/font_lexend"
-            android:backgroundTint="@color/novel"
-            android:textColor="@color/white"
-            android:layout_marginBottom="10dp"
-            android:paddingVertical="12dp"
-            app:cornerRadius="12dp"
-            app:icon="@drawable/ic_edit"
-            app:iconGravity="textStart"
-            app:iconTint="@color/white"
-            android:drawablePadding="8dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnChangePassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Đổi mật khẩu"
-            android:fontFamily="@font/font_lexend"
-            android:backgroundTint="@color/novel"
-            android:textColor="@color/white"
-            android:layout_marginBottom="10dp"
-            android:paddingVertical="12dp"
-            app:cornerRadius="12dp"
-            app:iconGravity="textStart"
-            app:iconTint="@color/white"
-            android:drawablePadding="8dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPurchaseRecord"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/font_lexend"
-            android:backgroundTint="@color/novel"
-            android:textColor="@color/white"
-            android:text="Xem lịch sử mua hàng"
-            android:layout_marginBottom="10dp"
-            android:paddingVertical="12dp"
-            app:cornerRadius="12dp"
-            app:iconGravity="textStart"
-            app:iconTint="@color/white"
-            android:drawablePadding="8dp" />
+        android:padding="16dp"
+        tools:context=".fragmenthome.InfoFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-        android:paddingVertical="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="24dp">
 
-        <TextView
-            android:layout_width="0dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avt"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/avatar"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"
+                android:contentDescription="Ảnh đại diện"
+                android:layout_marginBottom="12dp"/>
+
+            <TextView
+                android:id="@+id/txtUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên người dùng"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/black"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/txtEmail"
+                android:fontFamily="@font/font_lexend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email người dùng"
+                android:textSize="16sp"
+                android:textColor="#5B5A5A"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/txtJoinDate"
+                android:fontFamily="@font/font_lexend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tham gia: 01/01/2024"
+                android:textSize="14sp"
+                android:textColor="#5B5A5A"/>
+        </LinearLayout>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-        android:text="Chế độ tối"
-        android:fontFamily="@font/font_lexend"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_marginEnd="10dp"/>
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="24dp">
 
-        <Switch
-            android:id="@+id/switchDarkMode"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:textOff=""
-            android:textOn=""
-            android:padding="8dp"
-            android:thumbTint="@color/white"
-            android:trackTint="@color/novel2"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/txtStoryCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_lexend"
+                        android:text="0"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/novel"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_lexend"
+                        android:text="Truyện"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/txtLikes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:fontFamily="@font/font_lexend"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/novel"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lượt thích"
+                        android:fontFamily="@font/font_lexend"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        ---
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chỉnh sửa hồ sơ"
+                    android:fontFamily="@font/font_lexend"
+                    android:backgroundTint="@color/novel"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="8dp"
+                    android:paddingVertical="12dp"
+                    app:cornerRadius="10dp"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white"
+                    android:textAlignment="textStart"
+                    android:paddingStart="24dp"
+                    android:drawablePadding="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChangePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Đổi mật khẩu"
+                    android:fontFamily="@font/font_lexend"
+                    android:backgroundTint="@color/novel"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="8dp"
+                    android:paddingVertical="12dp"
+                    app:cornerRadius="10dp"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white"
+                    android:textAlignment="textStart"
+                    android:paddingStart="24dp"
+                    android:drawablePadding="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPurchaseRecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_lexend"
+                    android:backgroundTint="@color/novel"
+                    android:textColor="@color/white"
+                    android:text="Xem lịch sử mua hàng"
+                    android:paddingVertical="12dp"
+                    app:cornerRadius="10dp"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white"
+                    android:textAlignment="textStart"
+                    android:paddingStart="24dp"
+                    android:drawablePadding="12dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Chế độ tối"
+                    android:fontFamily="@font/font_lexend"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginEnd="10dp"/>
+
+                <Switch
+                    android:id="@+id/switchDarkMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:thumbTint="@color/white"
+                    android:trackTint="@color/novel2"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        ---
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng xuất"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel2"
+            android:textColor="@color/white"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_logout"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:textAlignment="center"
+            android:drawablePadding="8dp" />
 
     </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Đăng xuất"
-        android:fontFamily="@font/font_lexend"
-        android:backgroundTint="@color/novel2"
-        android:textColor="@color/white"
-        android:paddingVertical="12dp"
-        app:cornerRadius="12dp"
-        app:icon="@drawable/ic_logout"
-        app:iconGravity="textStart"
-        app:iconTint="@color/white"
-        android:drawablePadding="8dp" />
-
-</LinearLayout>
-    </LinearLayout>
+</ScrollView>
