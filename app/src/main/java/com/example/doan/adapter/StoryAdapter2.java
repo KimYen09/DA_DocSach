@@ -35,7 +35,7 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
         void onDeleteStory(String storyId);
         void onEditStory(Story story);
         void onStoryClick(Story story);
-        void onEditChapterList(Story story); // <-- Phương thức để chỉnh sửa danh sách chương
+        void onEditChapterList(Story story);
     }
 
     public StoryAdapter2(Context context, List<Story> stories, OnStoryActionListener actionListener) {
@@ -118,11 +118,12 @@ public class StoryAdapter2 extends RecyclerView.Adapter<StoryAdapter2.StoryViewH
             if (holder.btnEdit != null) holder.btnEdit.setVisibility(View.VISIBLE);
             if (holder.btnDelete != null) holder.btnDelete.setVisibility(View.VISIBLE);
             if (holder.btnEditChap != null) holder.btnEditChap.setVisibility(View.VISIBLE); // <-- HIỂN THỊ btnEditChap
-        } else {
-            if (holder.btnEdit != null) holder.btnEdit.setVisibility(View.GONE);
-            if (holder.btnDelete != null) holder.btnDelete.setVisibility(View.GONE);
-            if (holder.btnEditChap != null) holder.btnEditChap.setVisibility(View.GONE); // <-- ẨN btnEditChap
         }
+//        else {
+//            if (holder.btnEdit != null) holder.btnEdit.setVisibility(View.GONE);
+//            if (holder.btnDelete != null) holder.btnDelete.setVisibility(View.GONE);
+//            if (holder.btnEditChap != null) holder.btnEditChap.setVisibility(View.GONE); // <-- ẨN btnEditChap
+//        }
 
         // OnClickListener cho toàn bộ item
         holder.itemView.setOnClickListener(view -> {

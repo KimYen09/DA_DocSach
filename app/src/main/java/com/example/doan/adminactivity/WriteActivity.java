@@ -92,7 +92,7 @@ public class WriteActivity extends AppCompatActivity {
             @Override
             public void onEditChapterList(Story story) {
                 Toast.makeText(WriteActivity.this, "Chỉnh sửa chương cho: " + story.getTitle(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(WriteActivity.this, EditChapters.class);
+                Intent intent = new Intent(WriteActivity.this, ListChapEdit.class);
                 intent.putExtra("storyId", story.getId());
                 startActivity(intent);
             }
