@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -127,6 +128,13 @@ public class PremiumPackageManagementActivity extends AppCompatActivity implemen
         recyclerView = findViewById(R.id.recyclerViewPackages);
         fabAdd = findViewById(R.id.fabAddPackage);
         progressBar = findViewById(R.id.progressBar);
+
+        // Khởi tạo nút Back và thêm sự kiện click
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> {
+            // Đóng activity và quay về trang trước
+            finish();
+        });
 
         // Setup toolbar
         if (getSupportActionBar() != null) {
