@@ -121,6 +121,8 @@ public class PendingStoriesActivity extends AppCompatActivity implements StoryAd
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
+                getSupportActionBar().setTitle("");
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
             }
         }
 

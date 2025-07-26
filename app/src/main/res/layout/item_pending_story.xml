@@ -93,34 +93,45 @@
                 <Button
                     android:id="@+id/btnApprove"
                     android:layout_width="0dp"
-                    android:layout_height="36dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="Duyệt"
-                    android:textSize="13sp"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
                     android:backgroundTint="@color/novel"
                     android:textColor="@android:color/white"
-                    android:layout_marginEnd="6dp" />
+                    android:layout_marginEnd="4dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp" />
 
                 <Button
                     android:id="@+id/btnReject"
                     android:layout_width="0dp"
-                    android:layout_height="36dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="Từ chối"
-                    android:textSize="13sp"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
                     android:backgroundTint="@android:color/holo_red_light"
                     android:textColor="@android:color/white"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="6dp" />
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp" />
 
                 <ImageView
                     android:id="@+id/btnViewDetails"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="6dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="4dp"
                     android:src="@android:drawable/ic_menu_info_details"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Chi tiết" />
+                    android:contentDescription="Chi tiết"
+                    android:padding="8dp" />
 
             </LinearLayout>
 
