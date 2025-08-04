@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:fillViewport="true"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context=".admin.StatisticsActivity">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:contentDescription="Quay lại"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thống kê"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/font_lexend"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/black"/>
+
+        <!-- Các trường nhập liệu cho bộ lọc thời gian (Từ ngày - Đến ngày) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Từ ngày:"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/black"
+                android:layout_marginEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/etFromDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="MM/yyyy"
+                android:textSize="8sp"
+                android:focusable="false"
+                android:clickable="true"
+                android:fontFamily="@font/font_lexend"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:padding="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đến ngày:"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_lexend"
+                android:textColor="@color/black"
+                android:layout_marginEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/etToDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="MM/yyyy"
+                android:textSize="6sp"
+                android:focusable="false"
+                android:clickable="true"
+                android:fontFamily="@font/font_lexend"
+                android:background="@drawable/bg_edittext_rounded"
+                android:padding="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnApplyFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lọc"
+                app:icon="@drawable/ic_search"
+                android:fontFamily="@font/font_lexend"
+                android:backgroundTint="@color/novel2"
+                android:textColor="@color/white"
+                android:layout_marginStart="16dp"
+                app:iconTint="@color/white"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/novel2"
+                app:strokeWidth="1dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp" />
+
+        </LinearLayout>
+
+        <!-- Phần hiển thị tổng số liệu (Tổng số truyện, Tổng lượt đọc, Tổng doanh thu, Tổng tài khoản) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:background="@drawable/bg_bogoc">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_book_list"
+                    android:contentDescription="Biểu tượng truyện"
+                    app:tint="@color/novel"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tổng số truyện:"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/font_lexend"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalStories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font_lexend"
+                    android:textColor="@color/novel"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_thongke"
+                    android:contentDescription="Biểu tượng lượt đọc"
+                    app:tint="@color/novel"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tổng lượt đọc:"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/font_lexend"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font_lexend"
+                    android:textColor="@color/novel"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_money"
+                    android:contentDescription="Biểu tượng doanh thu"
+                    app:tint="@color/novel"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tổng doanh thu:"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/font_lexend"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalRevenue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 VNĐ"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font_lexend"
+                    android:textColor="@color/novel"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:gravity="center_vertical">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/baseline_account_circle_24"-->
+<!--                    android:contentDescription="Biểu tượng tài khoản"-->
+<!--                    app:tint="@color/novel"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Tổng số tài khoản:"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:fontFamily="@font/font_lexend"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:layout_marginStart="8dp"/>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tvTotalUsers"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="0"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:fontFamily="@font/font_lexend"-->
+<!--                    android:textColor="@color/novel"-->
+<!--                    android:layout_marginStart="8dp"/>-->
+<!--            </LinearLayout>-->
+        </LinearLayout>
+
+
+        <!-- Biểu đồ tròn (PieChart) cho Lượt đọc, Tổng truyện, Tổng số tài khoản -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartOverall"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Biểu đồ cột (BarChart) cho Doanh thu trong khoảng thời gian đã chọn -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartRevenueOverPeriod"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Biểu đồ đường (LineChart) thống kê toàn bộ nội dung theo ngày -->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChartDailyStats"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="16dp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarStatistics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleLarge"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRefreshStatistics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Làm mới"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:drawablePadding="8dp" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context="account.Premium">
+
+    <ImageView
+        android:id="@+id/ivexit"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="30dp"
+        android:contentDescription="Exit"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/baseline_close_24" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_lexend"
+            android:gravity="center"
+            android:text="Premium"
+            android:textColor="#CE5A53"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/font_lexend"
+            android:text="Trải nghiệm cảm giác đắm mình trong từng con chữ"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/font_lexend"
+            android:paddingBottom="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="Gói Premium của bạn bao gồm đọc truyện độc quyền, không bị quảng cáo gián đoạn, không giới hạn truyện ngoại tuyến và hơn thế nữa."
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <!-- Thêm TextView hiển thị trạng thái Premium -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#F0F0F0">
+
+        <TextView
+            android:id="@+id/tvPremiumStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_lexend"
+            android:padding="16dp"
+            android:text="Đang kiểm tra trạng thái Premium..."
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pre1m"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
+        android:fontFamily="@font/font_lexend"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="1 Tháng/ 39.000đ"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        app:strokeColor="@color/black"
+        android:layout_marginBottom="10dp"
+        app:strokeWidth="2dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pre6m"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
+        android:fontFamily="@font/font_lexend"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="6 Tháng/ 199.000đ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        app:strokeColor="#070707"
+        android:layout_marginBottom="10dp"
+        app:strokeWidth="2dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pre1y"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
+        android:fontFamily="@font/font_lexend"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="1 Năm/ 399.000đ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        app:strokeColor="#070707"
+        android:layout_marginBottom="20dp"
+        app:strokeWidth="2dp" />
+
+    <!-- Nút Lịch sử mua hàng -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLichSuMuaHang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/novel"
+        android:fontFamily="@font/font_lexend"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:text="📋 Lịch sử mua hàng"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp" />
+
+</LinearLayout>

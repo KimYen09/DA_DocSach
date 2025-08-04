@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.doan">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.WRITE_MEDIA_IMAGES" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/lgsach"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/lgsach"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DoAn"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="31">
+        <activity
+            android:name="com.example.doan.adminactivity.PremiumPackageManagementActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".adminactivity.PendingAuthorRequestsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.RegisterAuthorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".adminactivity.EditChapters"
+            android:exported="false" />
+        <activity
+            android:name=".adminactivity.ListChapEdit"
+            android:exported="false" />
+        <activity
+            android:name=".adminactivity.StatisticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".adminactivity.PendingStoriesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".adminactivity.WriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".premium.ExamplePurchaseActivity"
+            android:exported="true" />
+        <activity
+            android:name=".account.EditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".homestory.EditStory"
+            android:exported="false" />
+        <activity
+            android:name=".homestory.AddChappter"
+            android:exported="false" />
+        <activity
+            android:name=".homestory.AddStory"
+            android:exported="true" />
+        <activity
+            android:name=".Comment.ChapterDetailActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.ChapterListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".adminactivity.PremiumManagementActivity"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.gms.auth.api.signin.v2.GoogleSignIn"
+            android:value="true" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".premium.Premium"
+            android:exported="true" />
+        <activity
+            android:name=".premium.LichSuMuaHangActivity"
+            android:exported="true" />
+        <activity
+            android:name=".premium.Payment"
+            android:exported="true" />
+        <activity
+            android:name=".Test"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".account.OTPPass"
+            android:exported="true" />
+        <activity
+            android:name=".account.ForgetPass"
+            android:exported="true" />
+        <activity
+            android:name=".account.ListCategory"
+            android:exported="true" />
+        <activity
+            android:name=".account.Login"
+            android:exported="true" />
+        <activity
+            android:name=".account.PassRegister"
+            android:exported="true" />
+        <activity
+            android:name=".account.EmailRegister"
+            android:exported="true" />
+        <activity
+            android:name=".account.HomePage"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+    </application>
+
+</manifest>

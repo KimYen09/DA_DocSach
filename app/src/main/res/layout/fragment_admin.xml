@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:paddingBottom="56dp"
+    tools:context=".fragmenthome.AdminFragment">
+
+    <!-- Nút chức năng (Tất cả là MaterialButton) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"> <!-- Khoảng cách từ phần thống kê -->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btntruyen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tất cả các truyện"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel"
+            android:icon="@drawable/ic_book_list"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:drawablePadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnchoduyet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Truyện chờ duyệt"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel"
+            android:icon="@drawable/ic_pending"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:drawablePadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPremium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel"
+            android:textColor="@color/white"
+            android:text="Quản lý gói Premium"
+            android:icon="@drawable/baseline_diamond_24"
+            android:layout_marginBottom="10dp"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:drawablePadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnauthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel"
+            android:textColor="@color/white"
+            android:text="Quản lý Tác giả"
+            android:icon="@drawable/baseline_diamond_24"
+            android:layout_marginBottom="10dp"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:drawablePadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnThongke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thống kê truyện"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart"
+            android:icon="@drawable/ic_thongke"
+            app:iconTint="@color/white"
+            android:drawablePadding="8dp" />
+
+    </LinearLayout>
+</LinearLayout>

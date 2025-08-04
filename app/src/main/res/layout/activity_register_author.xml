@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    android:padding="16dp"
+    tools:context=".ui.RegisterAuthorActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header: Nút quay lại và Tiêu đề màn hình -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:contentDescription="Quay lại"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Đăng ký tác giả"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:layout_marginEnd="48dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Thông báo trạng thái (sẽ hiển thị nếu đã là tác giả/admin) -->
+        <TextView
+            android:id="@+id/tvStatusMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bạn đã là tác giả hoặc admin. Không cần đăng ký lại."
+            android:textSize="18sp"
+            android:fontFamily="@font/font_lexend"
+            android:textColor="@android:color/holo_red_dark"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Form đăng ký -->
+        <LinearLayout
+            android:id="@+id/registrationFormLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên tác giả (hiển thị công khai):"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/edtAuthorName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tên tác giả của bạn"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="18sp"
+                android:padding="12dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giới thiệu về bản thân (tùy chọn):"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/edtAuthorBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:gravity="top"
+                android:hint="Viết vài dòng về kinh nghiệm/sở thích viết lách của bạn"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:background="@drawable/bg_edittext_rounded"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
+                android:layout_marginBottom="24dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRegisterAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đăng ký làm tác giả"
+                android:fontFamily="@font/font_lexend"
+                android:backgroundTint="@color/novel"
+                android:textColor="@color/white"
+                android:paddingVertical="12dp"
+                app:cornerRadius="12dp"
+                app:iconGravity="textStart"
+                app:iconTint="@color/white"
+                android:drawablePadding="8dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

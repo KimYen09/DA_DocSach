@@ -1,0 +1,63 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "stories": {
+      ".read": "auth != null || true",
+      ".write": "auth != null || true",
+      "$storyId": {
+        ".write": "root.child('users').child(auth.uid).child('role').val() == 'author'"
+      }
+    },
+    "pending_stories": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$storyId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "admins": {
+      ".read": "auth != null",
+      ".write": false
+    },
+    "premium": {
+      ".read": "auth != null",
+      ".write": "auth.uid != null && root.child('admins').hasChild(auth.uid)"
+    },
+    "premium_packages": {
+      ".read": "auth != null || true",
+      ".write": "auth != null || true"
+    },
+    "user_premium_status": {
+      "$userId": {
+        ".read": "auth != null && auth.uid == $userId",
+        ".write": "auth != null && auth.uid == $userId"
+      }
+    },
+    "UserPremiumStatus": {
+      "$userId": {
+        ".read": "auth != null && auth.uid == $userId",
+        ".write": "auth != null && auth.uid == $userId"
+      }
+    },
+    "giaoDich": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$userID": {
+        ".read": "auth.uid === $userID || (auth.uid != null && root.child('admins').hasChild(auth.uid))",
+        ".write": "auth.uid === $userID || (auth.uid != null && root.child('admins').hasChild(auth.uid))"
+      }
+    },
+    "test": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    ".read": false,
+    ".write": false
+  }
+}

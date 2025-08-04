@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:contentDescription="Quay lại"/>
+
+    <TextView
+        android:id="@+id/tvChapterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tiêu đề chương"
+        android:fontFamily="@font/font_lexend"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_below="@id/btnBack"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvChapterTitle"
+        android:layout_above="@id/navigationLayout"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvChapterContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_lexend"
+                android:text="nhập nội dung truyện"
+                android:textSize="18sp"
+                android:lineSpacingExtra="8dp"
+                android:textColor="@android:color/black"/>
+
+            <!-- LinearLayout chứa 3 nút tương tác: tim, bình luận, chia sẻ -->
+            <LinearLayout
+                android:id="@+id/layoutInteraction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/btnLike"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/love"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Thả tim"/>
+                    <TextView
+                        android:id="@+id/tvLikeCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/btnComment"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/comment"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Bình luận"/>
+                    <TextView
+                        android:id="@+id/tvCommentCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/btnShare"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/share"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Chia sẻ"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Khu vực nhập bình luận chỉ có avatar -->
+            <LinearLayout
+                android:id="@+id/layoutCommentInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/imgUserAvatar"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/avatar"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/bg_bogoc"
+                        android:scaleType="centerCrop"/>
+
+                    <EditText
+                        android:id="@+id/edtComment"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Viết bình luận..."
+                        android:padding="12dp"
+                        android:background="@android:drawable/edit_text"
+                        android:textSize="15sp"
+                        android:layout_marginEnd="8dp"
+                        android:inputType="text"
+                        android:maxLines="3"
+                        android:gravity="center_vertical|start"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:enabled="true"
+                        android:cursorVisible="true"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/darker_gray"/>
+
+                    <Button
+                        android:id="@+id/btnSendComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="Gửi"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:background="@color/novel2"
+                        android:padding="8dp"
+                        android:minWidth="60dp"/>
+                </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:overScrollMode="never" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_alignParentBottom="true"
+        android:progress="0"
+        android:max="100"/>
+
+    <LinearLayout
+        android:id="@+id/navigationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/progressBar"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <ImageButton
+            android:id="@+id/btnPrevChapter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Trang trước"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/white"
+            android:layout_weight="1"
+            android:src="@drawable/before" />
+
+        <ImageButton
+            android:id="@+id/btnNextChapter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Trang sau"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/white"
+            android:layout_weight="1"
+            android:src="@drawable/ic_next" />
+    </LinearLayout>
+
+</RelativeLayout>

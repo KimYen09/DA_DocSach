@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp"
+    tools:context=".homestory.AddStory"> <!-- Đảm bảo tools:context đúng -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header: Nút quay lại và Tiêu đề màn hình -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:contentDescription="Quay lại"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Thêm truyện mới"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:layout_marginEnd="48dp" /> <!-- Khoảng cách để căn giữa tốt hơn -->
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Tiêu đề truyện -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tiêu đề truyện:"
+            android:fontFamily="@font/font_lexend"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/edtTitle"
+            android:fontFamily="@font/font_lexend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập tiêu đề truyện"
+            android:textSize="18sp"
+            android:padding="12dp"
+            android:background="@drawable/bg_edittext_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Mô tả truyện -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả truyện:"
+            android:fontFamily="@font/font_lexend"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/edtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:gravity="top"
+            android:fontFamily="@font/font_lexend"
+            android:hint="Nhập mô tả truyện"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="@drawable/bg_edittext_rounded"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Thể loại truyện -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thể loại truyện:"
+            android:fontFamily="@font/font_lexend"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/edtCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_lexend"
+            android:hint="Nhập thể loại truyện"
+            android:textSize="18sp"
+            android:padding="12dp"
+            android:background="@drawable/bg_edittext_rounded"
+            android:layout_marginBottom="16dp" />
+
+        <!-- URL ảnh bìa -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="URL ảnh bìa (hoặc tên drawable):"
+            android:fontFamily="@font/font_lexend"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/edtImageUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_lexend"
+            android:hint="Nhập URL ảnh bìa hoặc tên drawable"
+            android:textSize="18sp"
+            android:padding="12dp"
+            android:background="@drawable/bg_edittext_rounded"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Hiển thị ảnh bìa -->
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/lgdsach"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Lựa chọn loại truyện -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loại truyện:"
+            android:fontFamily="@font/font_lexend"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <RadioButton
+                android:id="@+id/radioSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuyển chọn"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="16sp"
+                android:checked="true"
+                android:layout_marginEnd="16dp"/>
+
+            <RadioButton
+                android:id="@+id/radioPremium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premium"
+                android:fontFamily="@font/font_lexend"
+                android:textSize="16sp"/>
+        </RadioGroup>
+
+        <!-- Nút Đăng tải -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddStory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng tải"
+            android:fontFamily="@font/font_lexend"
+            android:backgroundTint="@color/novel"
+            android:textColor="@color/white"
+            android:paddingVertical="12dp"
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:drawablePadding="8dp" />
+
+    </LinearLayout>
+</ScrollView>
