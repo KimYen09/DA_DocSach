@@ -565,9 +565,6 @@ public class HomeFragment extends Fragment {
 
         });
 
-        // Tắt cache Firebase (có thể gây ra hành vi không mong muốn nếu cần dữ liệu offline)
-        // databaseReference.keepSynced(false);
-        // databaseReference.getDatabase().purgeOutstandingWrites();
 
         // Load dữ liệu từ Firebase
         loadStories();

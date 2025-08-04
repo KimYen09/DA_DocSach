@@ -25,7 +25,6 @@ public class ViewAdapter extends FragmentStateAdapter {
             case 1: return new SearchFragment();
             case 2: return new LibraryFragment();
             case 3: return new AdminFragment();
-//            case 3: return new WriteFragment();
             case 4: return new InfoFragment();
             default: throw new IllegalArgumentException("Invalid position: " + position);
         }

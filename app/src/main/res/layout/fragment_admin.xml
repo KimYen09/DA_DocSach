@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:paddingTop="60dp"
     android:padding="16dp"
     android:paddingBottom="56dp"
     tools:context=".fragmenthome.AdminFragment">

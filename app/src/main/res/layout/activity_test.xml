@@ -9,8 +9,6 @@
     android:orientation="vertical"
     tools:context=".Test">
 
-
-
     <RelativeLayout
         android:id="@+id/rlbelow"
         android:layout_width="match_parent"

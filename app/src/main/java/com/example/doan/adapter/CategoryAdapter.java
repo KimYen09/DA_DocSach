@@ -1,4 +1,4 @@
-package com.example.doan.account;
+package com.example.doan.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

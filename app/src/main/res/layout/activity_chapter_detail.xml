@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
+
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="48dp"
@@ -12,6 +13,18 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/baseline_arrow_back_24"
         android:contentDescription="Quay lại" />
+
+    <ImageButton
+        android:id="@+id/btnBookmark"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Đánh dấu trang"
+        android:src="@drawable/outline_edit_24"
+        android:scaleType="centerInside" />
+
     <TextView
         android:id="@+id/tvChapterTitle"
         android:layout_width="match_parent"
@@ -24,7 +37,6 @@
         android:gravity="center"
         android:padding="16dp" />
 
-    <!-- Nội dung cuộn -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -55,8 +67,7 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:layout_marginTop="16dp"
-                android:weightSum="3"
-                android:background="@drawable/bg_edittext_rounded">
+                android:weightSum="3" android:background="@drawable/bg_edittext_rounded">
 
                 <ImageButton
                     android:id="@+id/btnLike"
@@ -70,12 +81,12 @@
                     android:padding="8dp" />
 
                 <ImageButton
-                    android:id="@+id/btnComment"
+                    android:id="@+id/btnGoToBookmark"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:contentDescription="Bình luận"
+                    android:contentDescription="Đi đến trang đã đánh dấu"
                     android:src="@drawable/ic_save"
                     android:scaleType="centerInside"
                     android:padding="8dp" />
@@ -137,7 +148,6 @@
                     android:text="GỬI"
                     android:textAllCaps="false" />
             </LinearLayout>
-            <!-- Danh sách bình luận -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewComments"
                 android:layout_width="match_parent"
@@ -147,7 +157,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Thanh điều hướng chương -->
     <LinearLayout
         android:id="@+id/navigationLayout"
         android:layout_width="match_parent"
@@ -186,4 +195,3 @@
         android:max="100" />
 
 </RelativeLayout>
-

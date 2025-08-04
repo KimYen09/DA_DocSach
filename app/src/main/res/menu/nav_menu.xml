@@ -22,7 +22,7 @@
     <item
         android:id="@+id/nav_write"
         android:icon="@drawable/ic_writes"
-        android:title="Viết"
+        android:title="Quản lý"
         app:showAsAction="ifRoom" />
 
     <item

@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doan.R;
+import com.example.doan.adapter.CategoryAdapter;
 
 import java.util.Arrays;
 import java.util.List;
