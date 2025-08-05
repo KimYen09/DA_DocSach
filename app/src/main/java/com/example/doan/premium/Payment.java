@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 //Firebase
+import com.example.doan.Test;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -235,7 +236,7 @@ public class Payment extends AppCompatActivity {
     }
 
     private void navigateToHome() {
-        Intent homeIntent = new Intent(Payment.this, HomeFragment.class);
+        Intent homeIntent = new Intent(Payment.this, Test.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         homeIntent.putExtra("NAVIGATE_TO_HOME_AFTER_PAYMENT", true);
         startActivity(homeIntent);

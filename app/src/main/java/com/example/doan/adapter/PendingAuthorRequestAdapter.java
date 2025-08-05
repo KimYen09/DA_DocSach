@@ -1,7 +1,6 @@
-package com.example.doan.adapter; // Tạo package mới cho adapters admin
+package com.example.doan.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,93 +12,106 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.doan.R;
-import com.example.doan.model.User; // Sử dụng lại User model
+import com.example.doan.model.User;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PendingAuthorRequestAdapter extends RecyclerView.Adapter<PendingAuthorRequestAdapter.RequestViewHolder> {
 
+public class PendingAuthorRequestAdapter extends RecyclerView.Adapter<PendingAuthorRequestAdapter.PendingAuthorViewHolder> {
     private Context context;
-    private List<User> requestList; // Danh sách các User có yêu cầu chờ duyệt
-    private OnRequestListener listener;
+    private ArrayList<User> pendingRequestsList;
 
-    public interface OnRequestListener {
-        void onApprove(User user);
-        void onReject(User user);
-    }
-
-    public PendingAuthorRequestAdapter(Context context, List<User> requestList, OnRequestListener listener) {
+    public PendingAuthorRequestAdapter(Context context, ArrayList<User> pendingRequestsList) {
         this.context = context;
-        this.requestList = requestList;
-        this.listener = listener;
+        this.pendingRequestsList = pendingRequestsList;
     }
 
     @NonNull
     @Override
-    public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PendingAuthorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_pending_author_request, parent, false);
-        return new RequestViewHolder(view);
+        return new PendingAuthorViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
-        User user = requestList.get(position);
-        if (user != null) {
-            holder.tvUserName.setText(user.getUsername() != null ? user.getUsername() : "N/A");
-            holder.tvUserEmail.setText(user.getEmail() != null ? user.getEmail() : "N/A");
-            holder.tvAuthorBio.setText("Giới thiệu: " + (user.getAuthorBio() != null ? user.getAuthorBio() : "Chưa có giới thiệu"));
+    public void onBindViewHolder(@NonNull PendingAuthorViewHolder holder, int position) {
+        User user = pendingRequestsList.get(position);
 
-            // Tải ảnh đại diện
-            // Đã sửa từ user.getAvatar() thành user.getAvatarUrl() để khớp với User model và JSON
-            String avatarName = user.getAvatar();
-            if (avatarName != null && !avatarName.isEmpty()) {
-                int resourceId = context.getResources().getIdentifier(
-                        avatarName, "drawable", context.getPackageName());
-                if (resourceId != 0) {
-                    Glide.with(context).load(resourceId).into(holder.imgUserAvatar);
-                } else {
-                    Glide.with(context).load(avatarName)
-                            .placeholder(R.drawable.avatar)
-                            .error(R.drawable.avatar)
-                            .into(holder.imgUserAvatar);
-                }
-            } else {
-                holder.imgUserAvatar.setImageResource(R.drawable.avatar);
-            }
-
-            // Set OnClickListeners cho các nút duyệt/từ chối
-            holder.btnApprove.setOnClickListener(v -> {
-                if (listener != null) {
-                    listener.onApprove(user);
-                }
-            });
-
-            holder.btnReject.setOnClickListener(v -> {
-                if (listener != null) {
-                    listener.onReject(user);
-                }
-            });
+        if (user.getAvatar() != null && !user.getAvatar().isEmpty()) {
+            Glide.with(context).load(user.getAvatar()).into(holder.imgUserAvatar);
+        } else {
+            Glide.with(context).load(R.drawable.avatar).into(holder.imgUserAvatar);
         }
+
+        holder.tvUserName.setText(user.getUsername());
+        holder.tvUserEmail.setText(user.getEmail());
+        holder.tvAuthorName.setText("Tên tác giả đăng ký: " + user.getAuthorName());
+        holder.tvAuthorBio.setText("Giới thiệu: " + user.getAuthorBio());
+
+        // Xử lý sự kiện khi nhấn nút Duyệt
+        holder.btnApprove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    User userToApprove = pendingRequestsList.get(adapterPosition);
+                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userToApprove.getUserId());
+                    // Cập nhật trạng thái thành "approved" khi người dùng được duyệt
+                    userRef.child("requestStatus").setValue("approved");
+                    userRef.child("role").setValue("author");
+
+                    pendingRequestsList.remove(adapterPosition);
+                    notifyItemRemoved(adapterPosition);
+                    Toast.makeText(context, "Đã duyệt yêu cầu của " + userToApprove.getUsername(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Xử lý sự kiện khi nhấn nút Từ chối
+        holder.btnReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    User userToReject = pendingRequestsList.get(adapterPosition);
+                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userToReject.getUserId());
+                    // Cập nhật trạng thái thành "rejected" khi người dùng bị từ chối
+                    userRef.child("requestStatus").setValue("rejected");
+                    userRef.child("role").setValue("user");
+
+                    pendingRequestsList.remove(adapterPosition);
+                    notifyItemRemoved(adapterPosition);
+                    Toast.makeText(context, "Đã từ chối yêu cầu của " + userToReject.getUsername(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return requestList.size();
+        return pendingRequestsList.size();
     }
 
-    public static class RequestViewHolder extends RecyclerView.ViewHolder {
+    public static class PendingAuthorViewHolder extends RecyclerView.ViewHolder {
         CircleImageView imgUserAvatar;
-        TextView tvUserName, tvUserEmail, tvAuthorName, tvAuthorBio;
-        MaterialButton btnApprove, btnReject;
+        TextView tvUserName;
+        TextView tvUserEmail;
+        TextView tvAuthorName;
+        TextView tvAuthorBio;
+        MaterialButton btnApprove;
+        MaterialButton btnReject;
 
-        public RequestViewHolder(@NonNull View itemView) {
+        public PendingAuthorViewHolder(@NonNull View itemView) {
             super(itemView);
             imgUserAvatar = itemView.findViewById(R.id.imgUserAvatar);
             tvUserName = itemView.findViewById(R.id.tvUserName);
             tvUserEmail = itemView.findViewById(R.id.tvUserEmail);
+            tvAuthorName = itemView.findViewById(R.id.tvAuthorName);
             tvAuthorBio = itemView.findViewById(R.id.tvAuthorBio);
             btnApprove = itemView.findViewById(R.id.btnApprove);
             btnReject = itemView.findViewById(R.id.btnReject);
