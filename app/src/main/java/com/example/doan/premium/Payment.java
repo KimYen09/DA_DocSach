@@ -236,7 +236,7 @@ public class Payment extends AppCompatActivity {
     }
 
     private void navigateToHome() {
-        Intent homeIntent = new Intent(Payment.this, Test.class);
+        Intent homeIntent = new Intent(Payment.this, HomeFragment.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         homeIntent.putExtra("NAVIGATE_TO_HOME_AFTER_PAYMENT", true);
         startActivity(homeIntent);
